@@ -5,10 +5,10 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import Login from './Login.jsx';
-import Chat from './Chat.jsx';
-import Navbar from './Navbar.jsx';
-import AuthContext from '../contexts/authContext.js';
+import Login from './app/LoginPage.jsx';
+import MessagesList from './app/ChatPage.jsx';
+import Navbar from './app/Navbar.jsx';
+import AuthContext from './contexts/authContext.js';
 
 export default () => {
   const auth = useContext(AuthContext);
@@ -18,7 +18,7 @@ export default () => {
         <Switch>
           <Route exact path="/">
             {auth.isLogIn
-              ? <Chat />
+              ? <MessagesList />
               : <Redirect to="/login" /> }
           </Route>
           <Route path="/login">

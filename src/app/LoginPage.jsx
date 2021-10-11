@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
 import routes from '../routes.js';
-import Icon from '../../assets/icon.jpg';
+import Logo from '../../assets/logo.jpg';
 import AuthContext from '../contexts/authContext.js';
 
 const loginSchema = Yup.object().shape({
@@ -107,7 +107,7 @@ export default () => (
         <div className="card shadow-sm">
           <div className="card-body row p-5">
             <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-              <img src={Icon} alt="Страница входа" />
+              <img src={Logo} alt="Страница входа" />
             </div>
             <LoginForm />
           </div>
