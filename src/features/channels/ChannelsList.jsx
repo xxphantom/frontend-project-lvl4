@@ -1,7 +1,15 @@
 import React from 'react';
 import cn from 'classnames';
+import { useDispatch } from 'react-redux';
+import { currentChannelChanged } from './channelsSlice';
 
 const ChannelsList = ({ currentChannelId, channels }) => {
+  const dispatch = useDispatch();
+
+  const changeChannelHandler = (id) => () => {
+    dispatch(currentChannelChanged(id));
+  };
+
   const btnclasses = (id) => cn(
     'w-100',
     'rounded-0',
@@ -25,7 +33,11 @@ const ChannelsList = ({ currentChannelId, channels }) => {
       <ul className="nav flex-column nav-pills nav-fill px-2">
         {channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100">
-            <button type="button" className={btnclasses(channel.id)}>
+            <button
+              type="button"
+              className={btnclasses(channel.id)}
+              onClick={changeChannelHandler(channel.id)}
+            >
               <span className="me-1">#</span>
               {channel.name}
             </button>

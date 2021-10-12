@@ -24,12 +24,15 @@ export const channelsSlice = createSlice({
       state.currentChannelId = currentChannelId;
       channelsAdapter.upsertMany(state, channels);
     },
+    currentChannelChanged(state, action) {
+      state.currentChannelId = action.payload;
+    },
   },
 });
 
 export default channelsSlice.reducer;
 
-export const { channelsAdded } = channelsSlice.actions;
+export const { channelsAdded, currentChannelChanged } = channelsSlice.actions;
 
 export const {
   selectAll: selectAllChannels,
