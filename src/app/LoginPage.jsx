@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
 import routes from '../routes.js';
-import Logo from '../../assets/logo.jpg';
+import Logo from '../../assets/icon.jpg';
 import AuthContext from '../contexts/authContext.js';
 
 const loginSchema = Yup.object().shape({

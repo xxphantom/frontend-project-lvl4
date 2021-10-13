@@ -27,6 +27,9 @@ export const channelsSlice = createSlice({
     currentChannelChanged(state, action) {
       state.currentChannelId = action.payload;
     },
+    oneChannelAdded: channelsAdapter.addOne,
+    channelRenamed: channelsAdapter.updateOne,
+    channelRemoved: channelsAdapter.removeOne,
   },
 });
 

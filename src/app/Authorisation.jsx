@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
+import { useLocalStorage } from 'react-use';
 import AuthContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
-  const userData = localStorage.getItem('user');
-  const user = JSON.parse(userData);
-  const isHasToken = !!user;
+  const [authData, setAuthData, removeAuthData] = useLocalStorage('user');
+  const isHasToken = !!authData;
   const [isLogIn, setLogIn] = useState(isHasToken);
   const logIn = ({ username, token }) => {
-    localStorage.setItem('user', JSON.stringify({ username, token }));
+    setAuthData({ username, token });
     setLogIn(true);
   };
   const logOut = () => {
-    localStorage.removeItem('user');
+    removeAuthData();
     setLogIn(false);
   };
   return (
-    <AuthContext.Provider value={{ isLogIn, logIn, logOut }}>
+    <AuthContext.Provider value={{
+      isLogIn,
+      logIn,
+      logOut,
+      token: authData?.token,
+      username: authData?.username,
+    }}
+    >
       {children}
     </AuthContext.Provider>
   );

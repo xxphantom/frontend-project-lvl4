@@ -5,7 +5,6 @@ import { currentChannelChanged } from './channelsSlice';
 
 const ChannelsList = ({ currentChannelId, channels }) => {
   const dispatch = useDispatch();
-
   const changeChannelHandler = (id) => () => {
     dispatch(currentChannelChanged(id));
   };
