@@ -9,7 +9,9 @@ const messagesAdapter = createEntityAdapter({
   selectId: (post) => post.id,
 });
 
-const initialState = messagesAdapter.getInitialState();
+const initialState = messagesAdapter.getInitialState({
+  sentMessageStatus: 'idle',
+});
 
 export const postsSlice = createSlice({
   name: 'messages',
@@ -20,12 +22,27 @@ export const postsSlice = createSlice({
       messagesAdapter.upsertMany(state, messages);
     },
     oneMessageAdded: messagesAdapter.addOne,
+    sentMessageStatusPending(state) {
+      state.sentMessageStatus = 'pending';
+    },
+    sentMessageStatusSuccess(state) {
+      state.sentMessageStatus = 'success';
+    },
+    sentMessageStatusFailed(state) {
+      state.sentMessageStatus = 'failed';
+    },
   },
 });
 
 export default postsSlice.reducer;
 
-export const { messagesAdded, oneMessageAdded } = postsSlice.actions;
+export const {
+  messagesAdded,
+  oneMessageAdded,
+  sentMessageStatusPending,
+  sentMessageStatusSuccess,
+  sentMessageStatusFailed,
+} = postsSlice.actions;
 
 export const {
   selectAll: selectAllMessages,

@@ -1,9 +1,11 @@
 import React from 'react';
 import cn from 'classnames';
-import { useDispatch } from 'react-redux';
-import { currentChannelChanged } from './channelsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { currentChannelChanged, selectAllChannels } from './channelsSlice.js';
 
-const ChannelsList = ({ currentChannelId, channels }) => {
+const ChannelsList = () => {
+  const channels = useSelector(selectAllChannels);
+  const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const dispatch = useDispatch();
   const changeChannelHandler = (id) => () => {
     dispatch(currentChannelChanged(id));
