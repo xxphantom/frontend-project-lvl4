@@ -1,16 +1,33 @@
-import { sentMessageStatusPending, sentMessageStatusSuccess, sentMessageStatusFailed } from '../features/messages/messagesSlice.js';
+import {
+  sentMessageStatusPending,
+  sentMessageStatusSuccess,
+  sentMessageStatusFailed,
+  messageAdded,
+
+} from '../features/messages/messagesSlice.js';
+import {
+  channelAdded,
+  channelRenamed,
+  channelRemoved,
+} from '../features/channels/channelsSlice.js';
+
+const mapSocketEventsToActions = {
+  removeChannel: channelRemoved,
+  renameChannel: channelRenamed,
+  newChannel: channelAdded,
+  newMessage: messageAdded,
+};
 
 const SOCKETIO_MIDDLEWARE = 'SOCKETIO_MIDDLEWARE';
 
-export const socketIOMiddleware = (socket, mapSocketRoutesToActions) => (storeApi) => {
-  Object.keys(mapSocketRoutesToActions).forEach((socketEvent) => {
+export const socketIOMiddleware = (socket) => (storeApi) => {
+  Object.entries(mapSocketEventsToActions).forEach(([socketEvent, action]) => {
     socket.on(socketEvent, (data) => {
-      storeApi.dispatch({
-        type: mapSocketRoutesToActions[socketEvent],
-        payload: data,
-      });
+      storeApi.dispatch(action(data));
     });
   });
+  socket.on('disconnect', (e) => console.error(e, '!!!!!!!!!'));
+  socket.on('connect_failed', (e) => console.error(e, 'Failed!'));
   return (next) => (action) => {
     if (action.type !== SOCKETIO_MIDDLEWARE) {
       next(action);
@@ -18,15 +35,21 @@ export const socketIOMiddleware = (socket, mapSocketRoutesToActions) => (storeAp
     }
     const { socketEvent, data } = action.payload;
     storeApi.dispatch(sentMessageStatusPending());
-    setTimeout(() => { // Timeout to explicitly render input blocking (to do delete this)
-      socket.emit(socketEvent, data, (response) => {
-        if (response.status === 'ok') {
-          storeApi.dispatch(sentMessageStatusSuccess());
-        } else {
+    const withTimeout = () => {
+      const timerId = setTimeout(() => {
+        storeApi.dispatch(sentMessageStatusFailed());
+      }, 2500);
+      return (response) => {
+        clearTimeout(timerId);
+        if (response.status !== 'ok') {
           storeApi.dispatch(sentMessageStatusFailed());
+          return;
         }
-      });
-    }, 50);
+        storeApi.dispatch(sentMessageStatusSuccess());
+      };
+    };
+
+    socket.volatile.emit(socketEvent, data, withTimeout());
   };
 };
 

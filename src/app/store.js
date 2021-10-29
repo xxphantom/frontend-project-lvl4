@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import messagesReducer from '../features/messages/messagesSlice.js';
 import channelsReducer from '../features/channels/channelsSlice.js';
-import socket, { mapSocketRoutesToActions } from '../api/socket.js';
+import socket from '../api/socket.js';
 import { socketIOMiddleware } from '../middlewares/socketIO.js';
 
 export default configureStore({
@@ -10,5 +10,5 @@ export default configureStore({
     messagesInfo: messagesReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    .concat(socketIOMiddleware(socket, mapSocketRoutesToActions)),
+    .concat(socketIOMiddleware(socket)),
 });
