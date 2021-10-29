@@ -6,7 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 import Login from './app/LoginPage.jsx';
-import MessagesList from './app/ChatPage.jsx';
+import ChatPage from './app/ChatPage.jsx';
 import Navbar from './app/Navbar.jsx';
 import AuthContext from './contexts/authContext.js';
 
@@ -18,7 +18,7 @@ export default () => {
         <Switch>
           <Route exact path="/">
             {auth.isLogIn
-              ? <MessagesList />
+              ? <ChatPage />
               : <Redirect to="/login" /> }
           </Route>
           <Route path="/login">
