@@ -6,7 +6,7 @@ import { channelsAdded } from '../features/channels/channelsSlice.js';
 import { messagesAdded } from '../features/messages/messagesSlice.js';
 import AuthContext from '../contexts/authContext.js';
 
-const fethInitialContent = () => {
+const fetchInitialContent = () => {
   const { token, logOut } = useContext(AuthContext);
   const headers = { Authorization: `Bearer ${token}` };
 
@@ -29,8 +29,4 @@ const fethInitialContent = () => {
   }, []);
 };
 
-const useChat = () => {
-  fethInitialContent();
-};
-
-export default useChat;
+export default fetchInitialContent;
