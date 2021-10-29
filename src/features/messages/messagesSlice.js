@@ -21,7 +21,7 @@ export const postsSlice = createSlice({
       const messages = action.payload;
       messagesAdapter.upsertMany(state, messages);
     },
-    oneMessageAdded: messagesAdapter.addOne,
+    messageAdded: messagesAdapter.addOne,
     sentMessageStatusPending(state) {
       state.sentMessageStatus = 'pending';
     },
@@ -38,7 +38,7 @@ export default postsSlice.reducer;
 
 export const {
   messagesAdded,
-  oneMessageAdded,
+  messageAdded,
   sentMessageStatusPending,
   sentMessageStatusSuccess,
   sentMessageStatusFailed,

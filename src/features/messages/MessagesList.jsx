@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { emit } from '../../middlewares/socketIO';
-import { selectCurrentMessages, oneMessageAdded } from './messagesSlice';
+import { selectCurrentMessages, messageAdded } from './messagesSlice';
 import AuthContext from '../../contexts/authContext.js';
 import { selectChannelById } from '../channels/channelsSlice';
 
@@ -26,9 +26,10 @@ const MessagesList = () => {
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
+    const message = { body: inputMessage, channelId: currentChannelId, username };
     const emitMessageAction = emit(
       'newMessage',
-      oneMessageAdded({ body: inputMessage, channelId: currentChannelId, username }),
+      messageAdded(message),
     );
     dispatch(emitMessageAction);
   };
@@ -36,7 +37,7 @@ const MessagesList = () => {
   const isDisabled = sentMessageStatus === 'pending';
 
   useEffect(() => {
-    lastMessageEl.current.scrollIntoView();
+    lastMessageEl.current?.scrollIntoView();
   }, [messages]);
 
   useEffect(() => {

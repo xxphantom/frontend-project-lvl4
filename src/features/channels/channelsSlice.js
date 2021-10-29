@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {
   createSlice,
-  // createAsyncThunk,
-  // createSelector,
   createEntityAdapter,
 } from '@reduxjs/toolkit';
 
@@ -27,7 +25,7 @@ export const channelsSlice = createSlice({
     currentChannelChanged(state, action) {
       state.currentChannelId = action.payload;
     },
-    oneChannelAdded: channelsAdapter.addOne,
+    channelAdded: channelsAdapter.addOne,
     channelRenamed: channelsAdapter.updateOne,
     channelRemoved: channelsAdapter.removeOne,
   },
@@ -35,7 +33,13 @@ export const channelsSlice = createSlice({
 
 export default channelsSlice.reducer;
 
-export const { channelsAdded, currentChannelChanged } = channelsSlice.actions;
+export const {
+  channelsAdded,
+  currentChannelChanged,
+  channelAdded,
+  channelRenamed,
+  channelRemoved,
+} = channelsSlice.actions;
 
 export const {
   selectAll: selectAllChannels,
