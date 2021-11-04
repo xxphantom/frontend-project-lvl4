@@ -4,39 +4,39 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { emit } from '../../middlewares/socketIO';
-import { messageAdded } from './messagesSlice';
+import { useSelector } from 'react-redux';
+import _truncate from 'lodash/truncate';
 import { selectCurrentChannelId } from '../channels/channelsSlice';
 import AuthContext from '../../contexts/authContext.js';
+import useSocketEmit, { PENDING, SUCCESS } from '../../hooks/useSocketEmit.js';
+
+const maxMessageLength = 1000;
 
 const AddMessageForm = () => {
+  const [emitStatus, emit] = useSocketEmit();
   const { username } = useContext(AuthContext);
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const sentMessageStatus = useSelector((state) => state.messagesInfo.sentMessageStatus);
   const [inputMessage, setInputMessage] = useState('');
-  const dispatch = useDispatch();
-  const isBlocked = sentMessageStatus === 'pending';
-  const trimmedInputMessage = inputMessage.trim();
-  const isDisabled = !trimmedInputMessage;
+  const isBlocked = emitStatus === PENDING;
+  const shortenedMessage = _truncate(inputMessage, {
+    length: maxMessageLength,
+    separator: /,? +/,
+  }).trim();
+  const isDisabled = !shortenedMessage;
   const inputEl = useRef(null);
 
   useEffect(() => {
     inputEl.current.focus();
-    if (sentMessageStatus === 'success') {
+    if (emitStatus === SUCCESS) {
       setInputMessage('');
     }
-  }, [currentChannelId, sentMessageStatus]);
+  }, [currentChannelId, emitStatus]);
 
   const inputMessageHandler = (e) => setInputMessage(e.target.value);
   const sendMessageHandler = (e) => {
     e.preventDefault();
-    const message = { body: trimmedInputMessage, channelId: currentChannelId, username };
-    const emitMessageAction = emit(
-      'newMessage',
-      messageAdded(message),
-    );
-    dispatch(emitMessageAction);
+    const message = { body: shortenedMessage, channelId: currentChannelId, username };
+    emit('newMessage', message);
   };
 
   return (

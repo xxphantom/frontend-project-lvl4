@@ -13,7 +13,7 @@ const initialState = channelsAdapter.getInitialState({
   currentChannelId: null,
 });
 
-export const channelsSlice = createSlice({
+const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
@@ -33,13 +33,7 @@ export const channelsSlice = createSlice({
 
 export default channelsSlice.reducer;
 
-export const {
-  channelsAdded,
-  currentChannelChanged,
-  channelAdded,
-  channelRenamed,
-  channelRemoved,
-} = channelsSlice.actions;
+export const channelsActions = channelsSlice.actions;
 
 export const {
   selectAll: selectAllChannels,

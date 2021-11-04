@@ -13,7 +13,7 @@ const initialState = messagesAdapter.getInitialState({
   sentMessageStatus: 'idle',
 });
 
-export const postsSlice = createSlice({
+const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
@@ -34,15 +34,9 @@ export const postsSlice = createSlice({
   },
 });
 
-export default postsSlice.reducer;
+export default messagesSlice.reducer;
 
-export const {
-  messagesAdded,
-  messageAdded,
-  sentMessageStatusPending,
-  sentMessageStatusSuccess,
-  sentMessageStatusFailed,
-} = postsSlice.actions;
+export const messagesActions = messagesSlice.actions;
 
 export const {
   selectAll: selectAllMessages,
