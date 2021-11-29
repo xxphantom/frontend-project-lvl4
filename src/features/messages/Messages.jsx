@@ -8,7 +8,6 @@ const MessagesList = () => {
   const currentChannel = useSelector(selectCurrentChannel);
   const messages = useSelector(selectCurrentMessages);
   const lastMessageEl = useRef(null);
-  const channelName = currentChannel.name;
   const messagesCount = messages.length;
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const MessagesList = () => {
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0">
         <b>
-          {`# ${channelName}` }
+          {currentChannel ? `# ${currentChannel.name}` : null}
         </b>
       </p>
       <span className="text-muted">
@@ -45,7 +44,7 @@ const MessagesList = () => {
       <div className="d-flex flex-column h-100">
         {renderChannelLabel()}
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-          {messages.map(renderMessage)}
+          {messages ? messages.map(renderMessage) : null}
         </div>
         <AddMessage />
       </div>

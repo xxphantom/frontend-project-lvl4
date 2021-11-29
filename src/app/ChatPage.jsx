@@ -1,11 +1,9 @@
 import React from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { selectModalInfo } from '../features/modal/modalSlice';
 import Channels from '../features/channels/Channels.jsx';
 import Messages from '../features/messages/Messages.jsx';
 import useInitChat from '../hooks/useInitChat.js';
-import getModal from '../features/modal';
+import ModalComponent from '../features/modal/ModalComponent.jsx';
 
 const spinnerBox = (
   <div className="h-100 d-flex justify-content-center align-items-center">
@@ -13,18 +11,8 @@ const spinnerBox = (
   </div>
 );
 
-const renderModal = (modalInfo) => {
-  if (!modalInfo.type) {
-    return null;
-  }
-
-  const Component = getModal(modalInfo.type);
-  return <Component />;
-};
-
 const ChatPage = () => {
   const isInitialDataFetched = useInitChat();
-  const modalInfo = useSelector(selectModalInfo);
 
   if (!isInitialDataFetched) {
     return spinnerBox;
@@ -32,7 +20,7 @@ const ChatPage = () => {
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      {renderModal(modalInfo)}
+      <ModalComponent />
       <Row className="h-100 bg-white flex-md-row">
         <Channels />
         <Messages />

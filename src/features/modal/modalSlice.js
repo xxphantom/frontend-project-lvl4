@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isOpen: false,
   type: null,
-  data: null,
+  extra: {},
 };
 
 const modalSlice = createSlice({
@@ -15,9 +15,15 @@ const modalSlice = createSlice({
       const { payload } = action;
       state.isOpen = true;
       state.type = payload.modalType;
+
+      if (payload.extra) {
+        state.extra = payload.extra;
+      }
     },
     closeModal(state) {
       state.isOpen = false;
+      state.type = null;
+      state.extra = null;
     },
   },
 });

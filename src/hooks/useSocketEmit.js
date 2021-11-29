@@ -1,32 +1,35 @@
-import { useState } from 'react';
 import socket from '../api/socket.js';
 
-const IDLE = 'idle';
-export const FAILED = 'failed';
-export const PENDING = 'pending';
-export const SUCCESS = 'success';
+const maxEmitTime = 2500;
 
 const useSocket = () => {
-  const [emitStatus, setEmitStatus] = useState(IDLE);
-
-  const emit = (socketEvent, payload) => {
-    setEmitStatus(PENDING);
+  const makeSocketEventEmitter = (socketEvent) => (payload) => new Promise((resolve, reject) => {
     const withTimeout = () => {
       const timerId = setTimeout(() => {
-        setEmitStatus(FAILED);
-      }, 2500);
+        reject(Error('Socket timed out! Check your network connection'));
+      }, maxEmitTime);
+
       return (response) => {
         clearTimeout(timerId);
-        if (response.status !== 'ok') {
-          setEmitStatus(FAILED);
-          return;
+        if (response.status === 'ok') {
+          resolve('success');
         }
-        setEmitStatus(SUCCESS);
+        reject(Error(`Socket response status: ${response.status}`));
       };
     };
-    socket.volatile.emit(socketEvent, payload, withTimeout());
+    // todo delete timeout
+    setTimeout(() => socket.volatile.emit(socketEvent, payload, withTimeout()), 100);
+    // socket.volatile.emit(socketEvent, payload, withTimeout());
+  });
+
+  const emitters = {
+    newMessage: makeSocketEventEmitter('newMessage'),
+    newChannel: makeSocketEventEmitter('newChannel'),
+    renameChannel: makeSocketEventEmitter('renameChannel'),
+    removeChannel: makeSocketEventEmitter('removeChannel'),
   };
-  return [emitStatus, emit];
+
+  return emitters;
 };
 
 export default useSocket;

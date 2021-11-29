@@ -3,6 +3,7 @@ import {
   createSlice,
   createSelector,
   createEntityAdapter,
+  original,
 } from '@reduxjs/toolkit';
 
 const messagesAdapter = createEntityAdapter({
@@ -10,33 +11,8 @@ const messagesAdapter = createEntityAdapter({
 });
 
 const initialState = messagesAdapter.getInitialState({
-  sentMessageStatus: 'idle',
+  messages: {},
 });
-
-const messagesSlice = createSlice({
-  name: 'messages',
-  initialState,
-  reducers: {
-    messagesAdded(state, action) {
-      const messages = action.payload;
-      messagesAdapter.upsertMany(state, messages);
-    },
-    messageAdded: messagesAdapter.addOne,
-    sentMessageStatusPending(state) {
-      state.sentMessageStatus = 'pending';
-    },
-    sentMessageStatusSuccess(state) {
-      state.sentMessageStatus = 'success';
-    },
-    sentMessageStatusFailed(state) {
-      state.sentMessageStatus = 'failed';
-    },
-  },
-});
-
-export default messagesSlice.reducer;
-
-export const messagesActions = messagesSlice.actions;
 
 export const {
   selectAll: selectAllMessages,
@@ -48,3 +24,30 @@ export const selectCurrentMessages = createSelector(
   [selectAllMessages, (state) => state.channelsInfo.currentChannelId],
   (messages, channelId) => messages.filter((message) => message.channelId === channelId),
 );
+
+const messagesSlice = createSlice({
+  name: 'messages',
+  initialState,
+  reducers: {
+    messagesAdded(state, action) {
+      const messages = action.payload;
+      messagesAdapter.upsertMany(state, messages);
+    },
+    messageAdded: messagesAdapter.addOne,
+  },
+  extraReducers(builder) {
+    builder
+      .addCase('channels/channelRemoved', (state, action) => {
+        const { id } = action.payload;
+        const removedMessagesIds = Object
+          .values(original(state.entities))
+          .filter((entity) => entity.channelId === id)
+          .map((entity) => entity.id);
+        messagesAdapter.removeMany(state, removedMessagesIds);
+      });
+  },
+});
+
+export default messagesSlice.reducer;
+
+export const messagesActions = messagesSlice.actions;

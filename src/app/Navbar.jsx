@@ -10,7 +10,7 @@ export default (props) => {
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <div className="container">
           <a className="navbar-brand" href="/">
-            Hexlet Chat
+            Chat on React
           </a>
           { isLogIn ? (
             <button type="button" onClick={logOut} className="btn btn-primary">
