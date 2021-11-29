@@ -12,7 +12,7 @@ const RenameChannel = ({ closeModal, extra, validationSchema }) => {
   const { name: oldChannelName } = useSelector((state) => selectChannelById(state, channelId));
   const inputEl = useRef();
 
-  const renameHandler = async (values, { setIsSubmitting }) => {
+  const renameChannelHandler = async (values, { setIsSubmitting }) => {
     const trimmedInput = values.channelName.trim();
     const channel = { id: channelId, name: trimmedInput };
     try {
@@ -28,7 +28,7 @@ const RenameChannel = ({ closeModal, extra, validationSchema }) => {
   const formik = useFormik({
     initialValues: { channelName: oldChannelName },
     validationSchema,
-    onSubmit: renameHandler,
+    onSubmit: renameChannelHandler,
   });
 
   useEffect(() => {
