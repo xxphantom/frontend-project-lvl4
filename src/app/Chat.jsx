@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
-import Channels from '../features/channels/Channels.jsx';
-import Messages from '../features/messages/Messages.jsx';
+import ChannelsList from '../features/channels/ChannelsList.jsx';
+import MessagesList from '../features/messages/MessagesList.jsx';
 import useInitChat from '../hooks/useInitChat.js';
 import ModalComponent from '../features/modal/ModalComponent.jsx';
 
@@ -11,7 +11,7 @@ const spinnerBox = (
   </div>
 );
 
-const ChatPage = () => {
+const Chat = () => {
   const isInitialDataFetched = useInitChat();
 
   if (!isInitialDataFetched) {
@@ -22,11 +22,11 @@ const ChatPage = () => {
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <ModalComponent />
       <Row className="h-100 bg-white flex-md-row">
-        <Channels />
-        <Messages />
+        <ChannelsList />
+        <MessagesList />
       </Row>
     </Container>
   );
 };
 
-export default ChatPage;
+export default Chat;

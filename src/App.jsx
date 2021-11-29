@@ -5,8 +5,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import Login from './app/LoginPage.jsx';
-import ChatPage from './app/ChatPage.jsx';
+import Login from './app/Login.jsx';
+import ChatPage from './app/Chat.jsx';
 import Navbar from './app/Navbar.jsx';
 import AuthContext from './contexts/authContext.js';
 

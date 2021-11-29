@@ -54,7 +54,7 @@ const AddChannel = ({ closeModal, validationSchema }) => {
           <Button className="me-2" variant="secondary" onClick={closeModal}>
             Отменить
           </Button>
-          <Button disabled={formik.isSubmitting} variant="primary" onClick={formik.handleSubmit}>
+          <Button type="submit" disabled={formik.isSubmitting} variant="primary">
             Отправить
           </Button>
         </div>

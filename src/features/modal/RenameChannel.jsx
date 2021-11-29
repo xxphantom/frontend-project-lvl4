@@ -12,7 +12,7 @@ const RenameChannel = ({ closeModal, extra, validationSchema }) => {
   const { name: oldChannelName } = useSelector((state) => selectChannelById(state, channelId));
   const inputEl = useRef();
 
-  const renameChannelHandler = async (values, { setIsSubmitting }) => {
+  const renameChannelHandler = async (values, { setSubmitting }) => {
     const trimmedInput = values.channelName.trim();
     const channel = { id: channelId, name: trimmedInput };
     try {
@@ -20,7 +20,7 @@ const RenameChannel = ({ closeModal, extra, validationSchema }) => {
       closeModal();
     } catch (err) {
       console.error(err);
-      setIsSubmitting(false);
+      setSubmitting(false);
       inputEl.current.select();
     }
   };
@@ -60,7 +60,7 @@ const RenameChannel = ({ closeModal, extra, validationSchema }) => {
           <Button className="me-2" variant="secondary" onClick={closeModal}>
             Отменить
           </Button>
-          <Button disabled={formik.isSubmitting} variant="primary" onClick={formik.handleSubmit}>
+          <Button type="submit" disabled={formik.isSubmitting} variant="primary">
             Отправить
           </Button>
         </div>

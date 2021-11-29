@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import AddMessage from './AddMessage.jsx';
+import MessageForm from './MessageForm.jsx';
 import { selectCurrentChannel } from '../channels/channelsSlice';
 import { selectCurrentMessages } from './messagesSlice.js';
 
@@ -46,7 +46,7 @@ const MessagesList = () => {
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
           {messages ? messages.map(renderMessage) : null}
         </div>
-        <AddMessage />
+        <MessageForm />
       </div>
     </div>
   );
