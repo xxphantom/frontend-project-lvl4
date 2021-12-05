@@ -29,7 +29,7 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    messagesAdded(state, action) {
+    initMessages(state, action) {
       const messages = action.payload;
       messagesAdapter.upsertMany(state, messages);
     },

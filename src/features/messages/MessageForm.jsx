@@ -1,15 +1,14 @@
-import React, { useContext, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { selectCurrentChannelId } from '../channels/channelsSlice';
-import AuthContext from '../../contexts/authContext.js';
-import useSocketEmit from '../../hooks/useSocketEmit.js';
+import { useAuth, useSocket } from '../../hooks';
 
 const AddMessageForm = () => {
-  const socketEmit = useSocketEmit();
-  const { username } = useContext(AuthContext);
+  const socketEmit = useSocket();
+  const { username } = useAuth();
   const currentChannelId = useSelector(selectCurrentChannelId);
 
   const inputEl = useRef(null);
@@ -18,6 +17,10 @@ const AddMessageForm = () => {
       .required()
       .max(3000),
   });
+
+  useEffect(() => {
+    inputEl.current.focus();
+  }, [currentChannelId]);
 
   const sendMessageHandler = async (values, { setSubmitting, resetForm }) => {
     const message = { body: values.message.trim(), channelId: currentChannelId, username };

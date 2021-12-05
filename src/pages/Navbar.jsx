@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import AuthContext from '../contexts/authContext.js';
+import React from 'react';
+import { useAuth } from '../hooks';
 
 export default (props) => {
   const { children } = props;
   // const auth = useContext(AuthContext);
-  const { isLogIn, logOut } = useContext(AuthContext);
+  const { isLogIn, logOut } = useAuth();
   return (
     <div className="d-flex flex-column h-100">
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">

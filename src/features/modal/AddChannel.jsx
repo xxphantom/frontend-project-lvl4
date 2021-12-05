@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import cn from 'classnames';
-import useSocketEmit from '../../hooks/useSocketEmit.js';
+import { useSocket } from '../../hooks';
 
 const AddChannel = ({ closeModal, validationSchema }) => {
   const inputEl = useRef();
-  const socketEmit = useSocketEmit();
+  const emit = useSocket();
 
   useEffect(() => {
     inputEl.current.focus();
@@ -15,7 +15,7 @@ const AddChannel = ({ closeModal, validationSchema }) => {
   const addChannelHandler = async (values, { setSubmitting }) => {
     const channel = { name: values.channelName.trim() };
     try {
-      await socketEmit.newChannel(channel);
+      await emit.newChannel(channel);
       closeModal();
     } catch (err) {
       console.error(err.message);

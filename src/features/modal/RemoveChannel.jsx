@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { selectChannelById } from '../channels/channelsSlice.js';
-import useSocketEmit from '../../hooks/useSocketEmit.js';
+import { useSocket } from '../../hooks';
 
 const RemoveChannel = ({ closeModal, extra }) => {
   const { channelId } = extra;
-  const socketEmit = useSocketEmit();
+  const socketEmit = useSocket();
   const { name: channelName } = useSelector((state) => selectChannelById(state, channelId));
 
   const deleteChannelHandler = async () => {

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Link,
 } from 'react-router-dom';
@@ -12,9 +12,9 @@ import {
 import * as Yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
+import { useAuth } from '../hooks';
 import routes from '../routes.js';
 import Logo from '../../assets/icon.jpg';
-import AuthContext from '../contexts/authContext.js';
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -24,7 +24,7 @@ const loginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const handleSubmit = async (values, actions) => {
     try {
       const responce = await axios.post(routes.loginPath(), values);

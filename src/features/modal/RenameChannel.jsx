@@ -4,10 +4,10 @@ import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import cn from 'classnames';
 import { selectChannelById } from '../channels/channelsSlice.js';
-import useSocketEmit from '../../hooks/useSocketEmit.js';
+import { useSocket } from '../../hooks';
 
 const RenameChannel = ({ closeModal, extra, validationSchema }) => {
-  const socketEmit = useSocketEmit();
+  const socketEmit = useSocket();
   const { channelId } = extra;
   const { name: oldChannelName } = useSelector((state) => selectChannelById(state, channelId));
   const inputEl = useRef();

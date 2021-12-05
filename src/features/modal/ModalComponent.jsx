@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { modalActions, selectModalInfo } from './modalSlice.js';
-import useChannelValidation from '../../hooks/useChannelsValidation.js';
+import { useChannelValidation } from '../../hooks/index.js';
 import AddChannel from './AddChannel.jsx';
 import RenameChannel from './RenameChannel.jsx';
 import RemoveChannel from './RemoveChannel.jsx';

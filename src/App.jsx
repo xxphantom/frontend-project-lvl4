@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
   Switch,
   Route,
 } from 'react-router-dom';
-import Login from './app/Login.jsx';
-import ChatPage from './app/Chat.jsx';
-import Navbar from './app/Navbar.jsx';
-import AuthContext from './contexts/authContext.js';
+import Login from './pages/Login.jsx';
+import ChatPage from './pages/Chat.jsx';
+import Navbar from './pages/Navbar.jsx';
+import { useAuth } from './hooks';
 
 export default () => {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   return (
     <Navbar>
       <Router>

@@ -20,7 +20,7 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    channelsAdded(state, action) {
+    initChannels(state, action) {
       const { channels, currentChannelId } = action.payload;
       state.currentChannelId = currentChannelId;
       channelsAdapter.upsertMany(state, channels);
@@ -28,7 +28,12 @@ const channelsSlice = createSlice({
     currentChannelChanged(state, action) {
       state.currentChannelId = action.payload;
     },
-    channelAdded: channelsAdapter.addOne,
+    channelAdded(state, action) {
+      const channel = action.payload;
+      const { id } = channel;
+      channelsAdapter.addOne(state, channel);
+      state.currentChannelId = id;
+    },
     channelRenamed: channelsAdapter.upsertOne,
     channelRemoved(state, action) {
       const channelId = action.payload.id;
