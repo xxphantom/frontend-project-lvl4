@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 import ChatPage from './pages/Chat.jsx';
 import Navbar from './pages/Navbar.jsx';
 import { useAuth } from './hooks';
@@ -23,6 +24,9 @@ export default () => {
           </Route>
           <Route path="/login">
             {auth.isLogIn ? <Redirect to="/" /> : <Login />}
+          </Route>
+          <Route path="/signup">
+            {auth.isLogIn ? <Redirect to="/" /> : <Signup />}
           </Route>
           <Route path="*">
             <div>
