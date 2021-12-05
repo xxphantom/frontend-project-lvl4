@@ -8,7 +8,7 @@ import axios from 'axios';
 import cn from 'classnames';
 import { useAuth } from '../hooks';
 import routes from '../routes.js';
-import Logo from '../../assets/icon.jpg';
+import Logo from '../../assets/regIcon.jpg';
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -31,7 +31,7 @@ const RegForm = () => {
     console.log(values);
     try {
       const responce = await axios.post(routes.registrationPath(), { username, password });
-      actions.setStatus({ regError: false });
+      actions.setStatus({ regError: false, regErrorName: username });
       auth.logIn(responce.data);
     } catch (err) {
       if (err.response.status === 409) {
