@@ -45,7 +45,7 @@ const AddChannel = ({ closeModal, validationSchema, t }) => {
           name="channelName"
           className={className}
           type="text"
-          placeholder={t('modals.AddChannel.inputChannelName')}
+          placeholder={t('modals.inputChannelName')}
         />
         {isErrorShown
           ? <Form.Control.Feedback type="invalid" feedback="">{formik.errors.channelName}</Form.Control.Feedback>
