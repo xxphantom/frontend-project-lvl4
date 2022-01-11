@@ -6,7 +6,9 @@ import cn from 'classnames';
 import { selectChannelById } from '../channels/channelsSlice.js';
 import { useSocket } from '../../hooks';
 
-const RenameChannel = ({ closeModal, extra, validationSchema, t }) => {
+const RenameChannel = ({
+  closeModal, extra, validationSchema, t,
+}) => {
   const socketEmit = useSocket();
   const { channelId } = extra;
   const { name: oldChannelName } = useSelector((state) => selectChannelById(state, channelId));
