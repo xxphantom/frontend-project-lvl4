@@ -27,9 +27,7 @@ const RemoveChannel = ({ closeModal, extra, t }) => {
   return (
     <>
       <p className="lead">
-        {'Удалить канал: "'}
-        {channelName}
-        {'"?'}
+        {t('modals.RemoveChannel.question', { channelName })}
       </p>
       <div className="d-flex justify-content-end">
         <Button disabled={formik.isSubmitting} className="me-2" variant="secondary" onClick={closeModal}>

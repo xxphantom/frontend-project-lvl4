@@ -64,10 +64,10 @@ const LoginForm = ({ t }) => {
                 id="username"
                 type="username"
                 name="username"
-                placeholder="Ваш ник"
+                placeholder={t('nickname')}
                 className={getClasses('username')}
               />
-              <label htmlFor="userName">{t('nickName')}</label>
+              <label htmlFor="userName">{t('nickname')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="username" />
                 {status && status.authError ? t('login.wrongCredentials') : null}
@@ -78,7 +78,7 @@ const LoginForm = ({ t }) => {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Пароль"
+                placeholder={t('password')}
                 className={getClasses('password')}
               />
               <label htmlFor="password">{t('password')}</label>

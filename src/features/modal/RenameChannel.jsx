@@ -53,7 +53,7 @@ const RenameChannel = ({
           name="channelName"
           className={className}
           type="text"
-          placeholder="Введите название канала"
+          placeholder={t('modals.inputChannelName')}
         />
         {isErrorShown
           ? <Form.Control.Feedback type="invalid" feedback="">{formik.errors.channelName}</Form.Control.Feedback>

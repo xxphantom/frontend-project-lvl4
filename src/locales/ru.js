@@ -3,7 +3,7 @@ export default {
     chatName: 'Hexlet чат',
     exit: 'Выйти',
     logIn: 'Войти',
-    nickName: 'Имя пользователя',
+    nickname: 'Имя пользователя',
     password: 'Пароль',
     login: {
       altImageText: 'Страница входа',
@@ -28,6 +28,12 @@ export default {
       maxPasswordLength: 'Не более 200 символов',
       passwordMismatch: 'Пароли не совпадают',
     },
+    channelValidation: {
+      minLength: 'От 3 до 20 символов',
+      maxLength: 'От 3 до 20 символов',
+      required: 'Необходимо указать имя канала',
+      alreadyExists: 'Канал с таким именем уже существует',
+    },
     channelsList: {
       channels: 'Каналы',
       renameChannel: 'Переименовать',
@@ -45,14 +51,15 @@ export default {
     modals: {
       cancel: 'Отменить',
       send: 'Отправить',
+      inputChannelName: 'Введите название канала',
       AddChannel: {
-        inputChannelName: 'Введите название канала',
         title: 'Добавить канал',
       },
       RenameChannel: {
         title: 'Переименовать канал',
       },
       RemoveChannel: {
+        question: 'Удалить канал {{channelName}}?',
         title: 'Удалить канал',
         remove: 'Удалить',
       },
