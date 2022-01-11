@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import cn from 'classnames';
 import { useSocket } from '../../hooks';
 
-const AddChannel = ({ closeModal, validationSchema }) => {
+const AddChannel = ({ closeModal, validationSchema, t }) => {
   const inputEl = useRef();
   const emit = useSocket();
 
@@ -45,17 +45,17 @@ const AddChannel = ({ closeModal, validationSchema }) => {
           name="channelName"
           className={className}
           type="text"
-          placeholder="Введите название канала"
+          placeholder={t('modals.AddChannel.inputChannelName')}
         />
         {isErrorShown
           ? <Form.Control.Feedback type="invalid" feedback="">{formik.errors.channelName}</Form.Control.Feedback>
           : null}
         <div className="d-flex justify-content-end">
           <Button className="me-2" variant="secondary" onClick={closeModal}>
-            Отменить
+            {t('modals.cancel')}
           </Button>
           <Button type="submit" disabled={formik.isSubmitting} variant="primary">
-            Отправить
+            {t('modals.send')}
           </Button>
         </div>
       </Form.Group>

@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { selectChannelById } from '../channels/channelsSlice.js';
 import { useSocket } from '../../hooks';
 
-const RemoveChannel = ({ closeModal, extra }) => {
+const RemoveChannel = ({ closeModal, extra, t }) => {
   const { channelId } = extra;
   const socketEmit = useSocket();
   const { name: channelName } = useSelector((state) => selectChannelById(state, channelId));
@@ -33,10 +33,10 @@ const RemoveChannel = ({ closeModal, extra }) => {
       </p>
       <div className="d-flex justify-content-end">
         <Button disabled={formik.isSubmitting} className="me-2" variant="secondary" onClick={closeModal}>
-          Отменить
+          {t('modals.cancel')}
         </Button>
         <Button disabled={formik.isSubmitting} variant="danger" onClick={formik.handleSubmit}>
-          Удалить
+          {t('modals.RemoveChannel.remove')}
         </Button>
       </div>
     </>

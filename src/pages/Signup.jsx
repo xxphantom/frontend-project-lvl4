@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Formik, Form, Field, ErrorMessage,
@@ -7,36 +7,38 @@ import {
 import * as Yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks';
 import routes from '../routes.js';
 import Logo from '../../assets/regIcon.jpg';
 
-const validationSchema = Yup.object({
-  username: Yup.string()
-    .required('Поле должно быть заполнено')
-    .min(3, 'От 3 до 20 символов')
-    .max(20, 'От 3 до 20 символов'),
-  password: Yup.string()
-    .required('Поле должно быть заполнено')
-    .min(6, 'Не менее 6 символов'),
-  passwordConfirm: Yup.string()
-    .required('Поле должно быть заполнено')
-    .oneOf([Yup.ref('password'), null], 'Пароли не совпадают'),
-});
-
-const RegForm = () => {
+const RegForm = ({ t }) => {
   const auth = useAuth();
+  const [existingNames, setExistingNames] = useState([]);
 
-  const handleSubmit = async (values, actions) => {
+  const validationSchema = Yup.object({
+    username: Yup.string()
+      .required(t('validation.required'))
+      .min(3, t('validation.minNameLength'))
+      .max(20, t('validation.maxNameLength'))
+      .notOneOf(existingNames, t('validation.alreadyHaveUser')),
+    password: Yup.string()
+      .required(t('validation.required'))
+      .min(6, t('validation.minPasswordLength')),
+    passwordConfirm: Yup.string()
+      .required(t('validation.required'))
+      .oneOf([Yup.ref('password')], t('validation.passwordMismatch')),
+  });
+
+  const handleSubmit = async (values, { setFieldTouched }) => {
     const { username, password } = values;
-    console.log(values);
     try {
       const responce = await axios.post(routes.registrationPath(), { username, password });
-      actions.setStatus({ regError: false, regErrorName: username });
       auth.logIn(responce.data);
     } catch (err) {
       if (err.response.status === 409) {
-        actions.setStatus({ regError: true });
+        setExistingNames((names) => [...names, username]);
+        setFieldTouched('username');
         return;
       }
       throw err;
@@ -57,23 +59,23 @@ const RegForm = () => {
       }) => {
         const getClasses = (fieldName) => cn(
           'form-control',
-          { 'is-invalid': ((status && status.regError) || errors[fieldName]) && touched[fieldName] },
+          { 'is-invalid': ((status && status.backendErrors[fieldName]) || errors[fieldName]) && touched[fieldName] },
         );
         return (
           <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-            <h1 className="text-center mb-4">Регистрация</h1>
+            <h1 className="text-center mb-4">{t('signup.labelForm')}</h1>
             <div className="form-floating mb-3 form-group">
               <Field
                 id="username"
                 type="text"
                 name="username"
-                placeholder="Ваш ник"
+                placeholder={t('nickName')}
                 className={getClasses('username')}
               />
-              <label htmlFor="userName">Ваш ник</label>
+              <label htmlFor="userName">{t('nickName')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="username" />
-                {status && status.regError ? ' Пользователь уже существует' : null}
+                {status && status.backendErrors.username ? t('signup.alreadyHaveUser') : null}
               </div>
             </div>
             <div className="form-floating mb-3 form-group">
@@ -81,10 +83,10 @@ const RegForm = () => {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Пароль"
+                placeholder={t('password')}
                 className={getClasses('password')}
               />
-              <label htmlFor="password">Пароль</label>
+              <label htmlFor="password">{t('password')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="password" />
               </div>
@@ -94,10 +96,10 @@ const RegForm = () => {
                 id="passwordConfirm"
                 type="password"
                 name="passwordConfirm"
-                placeholder="Подтвердите пароль"
+                placeholder={t('signup.confirmPassword')}
                 className={getClasses('passwordConfirm')}
               />
-              <label htmlFor="password">Подтвердите пароль</label>
+              <label htmlFor="password">{t('signup.confirmPassword')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="passwordConfirm" />
               </div>
@@ -107,7 +109,7 @@ const RegForm = () => {
               className="w-100 mb-3 btn btn-outline-primary"
               disabled={isSubmitting}
             >
-              Submit
+              {t('signup.submitForm')}
             </button>
           </Form>
         );
@@ -116,25 +118,30 @@ const RegForm = () => {
   );
 };
 
-export default () => (
-  <div className="container-fluid h-100">
-    <div className="row justify-content-center align-content-center h-100">
-      <div className="col-12 col-md-8 col-xxl-6">
-        <div className="card shadow-sm">
-          <div className="card-body row p-5">
-            <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-              <img src={Logo} alt="Страница регистрации" />
+const Signup = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="container-fluid h-100">
+      <div className="row justify-content-center align-content-center h-100">
+        <div className="col-12 col-md-8 col-xxl-6">
+          <div className="card shadow-sm">
+            <div className="card-body row p-5">
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img src={Logo} alt={t('signup.altImageText')} />
+              </div>
+              <RegForm t={t} />
             </div>
-            <RegForm />
-          </div>
-          <div className="card-footer p-4">
-            <div className="text-center">
-              <span className="p-1">Уже есть аккаунт?</span>
-              <Link to="/login">Войти</Link>
+            <div className="card-footer p-4">
+              <div className="text-center">
+                <span className="p-1">{t('signup.maybeHaveAccount')}</span>
+                <Link to="/login">{t('logIn')}</Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
+
+export default Signup;

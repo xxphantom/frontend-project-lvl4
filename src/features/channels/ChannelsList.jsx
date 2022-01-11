@@ -1,14 +1,15 @@
 import React from 'react';
-// import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ButtonGroup, Dropdown, Button, DropdownButton,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { channelsActions, selectAllChannels } from './channelsSlice.js';
 import { modalActions } from '../modal/modalSlice';
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const channels = useSelector(selectAllChannels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
 
@@ -22,8 +23,8 @@ const ChannelsList = () => {
 
   const dropDownButtons = (channelId, variant) => (
     <DropdownButton variant={variant} as={ButtonGroup} title="" id="bg-nested-dropdown">
-      <Dropdown.Item onClick={() => handleShowModal('RenameChannel', { channelId })} eventKey="1">Переименовать</Dropdown.Item>
-      <Dropdown.Item onClick={() => handleShowModal('RemoveChannel', { channelId })} eventKey="2">Удалить</Dropdown.Item>
+      <Dropdown.Item onClick={() => handleShowModal('RenameChannel', { channelId })} eventKey="1">{t('channelsList.renameChannel')}</Dropdown.Item>
+      <Dropdown.Item onClick={() => handleShowModal('RemoveChannel', { channelId })} eventKey="2">{t('channelsList.deleteChannel')}</Dropdown.Item>
     </DropdownButton>
   );
 
@@ -48,9 +49,9 @@ const ChannelsList = () => {
   };
 
   return (
-    <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
+    <div className="col-4 col-md-3 col-lg-2 border-end pt-5 px-0 bg-light">
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>Каналы</span>
+        <span>{t('channelsList.channels')}</span>
         <button type="button" onClick={() => handleShowModal('AddChannel')} className="p-0 text-primary btn btn-group-vertical">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />

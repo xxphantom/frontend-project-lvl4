@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { modalActions, selectModalInfo } from './modalSlice.js';
 import { useChannelValidation } from '../../hooks/index.js';
 import AddChannel from './AddChannel.jsx';
@@ -12,14 +13,10 @@ const modals = {
   RenameChannel,
   RemoveChannel,
 };
-const modalTitles = {
-  AddChannel: 'Добавить канал',
-  RenameChannel: 'Переименовать канал',
-  RemoveChannel: 'Удалить канал',
-};
 
 const ModalComponent = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { isOpen, type, extra } = useSelector(selectModalInfo);
   const validationSchema = useChannelValidation();
 
@@ -35,7 +32,7 @@ const ModalComponent = () => {
   return (
     <Modal show={isOpen} onHide={closeModal} centered>
       <Modal.Header>
-        <Modal.Title>{modalTitles[type]}</Modal.Title>
+        <Modal.Title>{t(`modals.${type}.title`)}</Modal.Title>
         <Button variant="close" onClick={closeModal} />
       </Modal.Header>
       <Modal.Body>
@@ -43,6 +40,7 @@ const ModalComponent = () => {
           validationSchema={validationSchema}
           closeModal={closeModal}
           extra={extra}
+          t={t}
         />
       </Modal.Body>
     </Modal>

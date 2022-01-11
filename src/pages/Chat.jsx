@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import ChannelsList from '../features/channels/ChannelsList.jsx';
-import { channelsActions } from '../features/channels/channelsSlice.js';
 import MessagesList from '../features/messages/MessagesList.jsx';
-import { messagesActions } from '../features/messages/messagesSlice.js';
 import ModalComponent from '../features/modal/ModalComponent.jsx';
+import { channelsActions } from '../features/channels/channelsSlice.js';
+import { messagesActions } from '../features/messages/messagesSlice.js';
 import routes from '../routes.js';
 import { useAuth } from '../hooks';
 
@@ -17,6 +18,7 @@ const spinnerBox = (
 );
 
 const Chat = () => {
+  const { t } = useTranslation();
   const [isDataFetched, setIsDataFetched] = useState(false);
   const { token, logOut } = useAuth();
   const headers = { Authorization: `Bearer ${token}` };
@@ -49,10 +51,10 @@ const Chat = () => {
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <ModalComponent />
+      <ModalComponent t={t} />
       <Row className="h-100 bg-white flex-md-row">
-        <ChannelsList />
-        <MessagesList />
+        <ChannelsList t={t} />
+        <MessagesList t={t} />
       </Row>
     </Container>
   );

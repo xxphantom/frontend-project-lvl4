@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { selectChannelById } from '../channels/channelsSlice.js';
 import { useSocket } from '../../hooks';
 
-const RenameChannel = ({ closeModal, extra, validationSchema }) => {
+const RenameChannel = ({ closeModal, extra, validationSchema, t }) => {
   const socketEmit = useSocket();
   const { channelId } = extra;
   const { name: oldChannelName } = useSelector((state) => selectChannelById(state, channelId));
@@ -58,10 +58,10 @@ const RenameChannel = ({ closeModal, extra, validationSchema }) => {
           : null}
         <div className="d-flex justify-content-end">
           <Button className="me-2" variant="secondary" onClick={closeModal}>
-            Отменить
+            {t('modals.cancel')}
           </Button>
           <Button type="submit" disabled={formik.isSubmitting} variant="primary">
-            Отправить
+            {t('modals.send')}
           </Button>
         </div>
       </Form.Group>

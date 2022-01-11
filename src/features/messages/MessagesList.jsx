@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import MessageForm from './MessageForm.jsx';
 import { selectCurrentChannel } from '../channels/channelsSlice';
 import { selectCurrentMessages } from './messagesSlice.js';
 
 const MessagesList = () => {
+  const { t } = useTranslation();
   const currentChannel = useSelector(selectCurrentChannel);
   const messages = useSelector(selectCurrentMessages);
   const lastMessageEl = useRef(null);
@@ -34,7 +36,7 @@ const MessagesList = () => {
         </b>
       </p>
       <span className="text-muted">
-        {`${messagesCount} сообщений`}
+        {t('messagesList.messages', { count: messagesCount })}
       </span>
     </div>
   );

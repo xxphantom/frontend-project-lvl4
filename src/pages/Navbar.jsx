@@ -1,20 +1,21 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks';
 
 export default (props) => {
   const { children } = props;
-  // const auth = useContext(AuthContext);
+  const { t } = useTranslation();
   const { isLogIn, logOut } = useAuth();
   return (
     <div className="d-flex flex-column h-100">
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <div className="container">
           <a className="navbar-brand" href="/">
-            Chat on React
+            {t('chatName')}
           </a>
           { isLogIn ? (
             <button type="button" onClick={logOut} className="btn btn-primary">
-              Выйти
+              {t('exit')}
             </button>
           ) : null}
         </div>

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { useLocalStorage } from 'react-use';
 import { configureStore } from '@reduxjs/toolkit';
+import i18n from 'i18next';
+import { initReactI18next, I18nextProvider } from 'react-i18next';
 import modalSlice from './features/modal/modalSlice.js';
 import { AuthContext, SocketContext } from './contexts';
 import channelsSlice, { channelsActions } from './features/channels/channelsSlice';
 import messagesSlice, { messagesActions } from './features/messages/messagesSlice';
-import socket from './api/socket.js';
+import resources from './locales';
 import App from './App.jsx';
 
 const store = configureStore({
@@ -52,15 +54,7 @@ const mapSocketEventNamesToActions = {
   newMessage: messagesActions.messageAdded,
 };
 
-const openSocketListeners = (eventsToActions) => {
-  Object.entries(eventsToActions).forEach(([socketEventName, action]) => {
-    socket.on(socketEventName, (data) => {
-      store.dispatch(action(data));
-    });
-  });
-};
-
-const makeSocketEventEmitter = (socketEvent) => (payload) => (
+const makeSocketEventEmitter = (socket, socketEvent) => (payload) => (
   new Promise((resolve, reject) => {
     const withTimeout = () => {
       const timerId = setTimeout(() => {
@@ -78,10 +72,10 @@ const makeSocketEventEmitter = (socketEvent) => (payload) => (
     socket.volatile.emit(socketEvent, payload, withTimeout());
   }));
 
-const SocketProvider = ({ children }) => {
+const SocketProvider = ({ socket, children }) => {
   const emitters = Object.keys(mapSocketEventNamesToActions)
     .reduce((acc, socketEventName) => (
-      { ...acc, [socketEventName]: makeSocketEventEmitter(socketEventName) }
+      { ...acc, [socketEventName]: makeSocketEventEmitter(socket, socketEventName) }
     ), {});
 
   return (
@@ -91,15 +85,37 @@ const SocketProvider = ({ children }) => {
   );
 };
 
-const init = () => {
-  openSocketListeners(mapSocketEventNamesToActions, store.dispatch);
+const openSocketListeners = (socket, eventsToActions) => {
+  Object.entries(eventsToActions).forEach(([socketEventName, action]) => {
+    socket.on(socketEventName, (data) => {
+      store.dispatch(action(data));
+    });
+  });
+};
+
+const init = async (socket) => {
+  openSocketListeners(socket, mapSocketEventNamesToActions);
+
+  const i18nextInstanse = i18n.createInstance();
+  await i18nextInstanse.use(initReactI18next)
+    .init({
+      resources,
+      lng: 'ru',
+      fallbackLng: 'ru',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <SocketProvider>
-          <App />
-        </SocketProvider>
-      </AuthProvider>
+      <I18nextProvider i18n={i18nextInstanse}>
+        <AuthProvider>
+          <SocketProvider socket={socket}>
+            <App />
+          </SocketProvider>
+        </AuthProvider>
+      </I18nextProvider>
     </Provider>
   );
 };
