@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import cn from 'classnames';
+import { toast } from 'react-toastify';
 import { selectChannelById } from '../channels/channelsSlice.js';
 import { useSocket } from '../../hooks';
-import { toast } from 'react-toastify';
 
 const RenameChannel = ({
   closeModal, extra, validationSchema, t,
