@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +32,7 @@ const AddMessageForm = () => {
       resetForm();
     } catch (err) {
       console.error(err);
+      toast.error(t('networkError'));
     }
     setSubmitting(false);
     inputEl.current.focus();

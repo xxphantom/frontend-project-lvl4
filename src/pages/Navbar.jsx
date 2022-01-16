@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks';
 
@@ -21,6 +22,7 @@ export default (props) => {
         </div>
       </nav>
       {children}
+      <ToastContainer />
     </div>
   );
 };

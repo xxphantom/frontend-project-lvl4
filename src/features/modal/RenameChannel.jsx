@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import cn from 'classnames';
 import { selectChannelById } from '../channels/channelsSlice.js';
 import { useSocket } from '../../hooks';
+import { toast } from 'react-toastify';
 
 const RenameChannel = ({
   closeModal, extra, validationSchema, t,
@@ -20,10 +21,12 @@ const RenameChannel = ({
     try {
       await socketEmit.renameChannel(channel);
       closeModal();
+      toast.success(t('modals.RenameChannel.renamed'));
     } catch (err) {
       console.error(err);
       setSubmitting(false);
       inputEl.current.select();
+      toast.error(t('networkError'));
     }
   };
 

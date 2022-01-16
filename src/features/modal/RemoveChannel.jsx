@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import { selectChannelById } from '../channels/channelsSlice.js';
 import { useSocket } from '../../hooks';
 
@@ -14,8 +15,10 @@ const RemoveChannel = ({ closeModal, extra, t }) => {
     try {
       await socketEmit.removeChannel({ id: channelId });
       closeModal();
+      toast.success(t('modals.RemoveChannel.removed'));
     } catch (err) {
       console.error(err);
+      toast.error(t('networkError'));
     }
   };
 

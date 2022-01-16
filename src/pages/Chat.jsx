@@ -3,6 +3,7 @@ import { Container, Row, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import ChannelsList from '../features/channels/ChannelsList.jsx';
 import MessagesList from '../features/messages/MessagesList.jsx';
 import ModalComponent from '../features/modal/ModalComponent.jsx';
@@ -39,6 +40,8 @@ const Chat = () => {
       } catch (err) {
         if (err.response?.status === 401) {
           logOut();
+        } else {
+          toast.error(t('networkError'));
         }
       }
     };

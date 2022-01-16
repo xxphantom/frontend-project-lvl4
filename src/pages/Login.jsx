@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useAuth } from '../hooks';
 import routes from '../routes.js';
 import Logo from '../../assets/icon.jpg';
@@ -27,18 +28,17 @@ const LoginForm = ({ t }) => {
   });
 
   const handleSubmit = async (values, { setStatus }) => {
-    try {
-      const responce = await axios.post(routes.loginPath(), values);
-      const { token, username } = responce.data;
-      setStatus({ authError: false });
-      auth.logIn({ token, username });
-    } catch (err) {
-      if (err.response.status === 401) {
-        setStatus({ authError: true });
-        return;
-      }
-      throw err;
-    }
+    const responce = await axios.post(routes.loginPath(), values)
+      .catch((err) => {
+        if (err.response?.status === 401) {
+          setStatus({ authError: true });
+        } else {
+          toast.error(t('networkError'));
+        }
+      });
+    const { token, username } = responce.data;
+    setStatus({ authError: false });
+    auth.logIn({ token, username });
   };
   return (
     <Formik

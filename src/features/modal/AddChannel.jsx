@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 import cn from 'classnames';
 import { useSocket } from '../../hooks';
 
@@ -17,8 +18,10 @@ const AddChannel = ({ closeModal, validationSchema, t }) => {
     try {
       await emit.newChannel(channel);
       closeModal();
+      toast.success(t('modals.AddChannel.added'));
     } catch (err) {
       console.error(err.message);
+      toast.error(t('networkError'));
       setSubmitting(false);
       inputEl.current.select();
     }

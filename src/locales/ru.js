@@ -1,5 +1,6 @@
 export default {
   translation: {
+    networkError: 'Ошибка соединения',
     chatName: 'Hexlet чат',
     exit: 'Выйти',
     logIn: 'Войти',
@@ -54,14 +55,17 @@ export default {
       inputChannelName: 'Введите название канала',
       AddChannel: {
         title: 'Добавить канал',
+        added: 'Канал создан',
       },
       RenameChannel: {
         title: 'Переименовать канал',
+        renamed: 'Канал переименован',
       },
       RemoveChannel: {
         question: 'Удалить канал {{channelName}}?',
         title: 'Удалить канал',
         remove: 'Удалить',
+        removed: 'Канал удален',
       },
     },
   },
