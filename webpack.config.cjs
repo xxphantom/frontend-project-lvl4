@@ -23,6 +23,7 @@ module.exports = {
       publicPath: '/assets/',
     },
   },
+  devtool: 'source-map',
   plugins: [
     new MiniCssExtractPlugin(),
   ],
