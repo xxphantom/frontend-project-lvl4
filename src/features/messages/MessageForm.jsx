@@ -6,13 +6,14 @@ import * as Yup from 'yup';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { selectCurrentChannelId } from '../channels/channelsSlice';
-import { useAuth, useSocket } from '../../hooks';
+import { useAuth, useSocket, useProfanity } from '../../hooks';
 
 const AddMessageForm = () => {
   const { t } = useTranslation();
   const socketEmit = useSocket();
   const { username } = useAuth();
   const currentChannelId = useSelector(selectCurrentChannelId);
+  const profanity = useProfanity();
 
   const inputEl = useRef(null);
   const validationSchema = Yup.object({
@@ -26,7 +27,8 @@ const AddMessageForm = () => {
   }, [currentChannelId]);
 
   const sendMessageHandler = async (values, { setSubmitting, resetForm }) => {
-    const message = { body: values.message.trim(), channelId: currentChannelId, username };
+    const body = profanity.clean(values.message.trim());
+    const message = { body, channelId: currentChannelId, username };
     try {
       await socketEmit.newMessage(message);
       resetForm();

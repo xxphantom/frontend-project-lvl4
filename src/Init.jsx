@@ -3,9 +3,10 @@ import { Provider } from 'react-redux';
 import { useLocalStorage } from 'react-use';
 import { configureStore } from '@reduxjs/toolkit';
 import i18n from 'i18next';
+import * as profanity from 'leo-profanity';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import modalSlice from './features/modal/modalSlice.js';
-import { AuthContext, SocketContext } from './contexts';
+import { AuthContext, SocketContext, ProfanityContext } from './contexts';
 import channelsSlice, { channelsActions } from './features/channels/channelsSlice';
 import messagesSlice, { messagesActions } from './features/messages/messagesSlice';
 import resources from './locales';
@@ -93,6 +94,15 @@ const openSocketListeners = (socket, eventsToActions) => {
   });
 };
 
+const ProfanityProvider = ({ children }) => {
+  profanity.loadDictionary('ru');
+  return (
+    <ProfanityContext.Provider value={profanity}>
+      {children}
+    </ProfanityContext.Provider>
+  );
+};
+
 const init = async (socket) => {
   openSocketListeners(socket, mapSocketEventNamesToActions);
 
@@ -112,7 +122,9 @@ const init = async (socket) => {
       <I18nextProvider i18n={i18nextInstanse}>
         <AuthProvider>
           <SocketProvider socket={socket}>
-            <App />
+            <ProfanityProvider>
+              <App />
+            </ProfanityProvider>
           </SocketProvider>
         </AuthProvider>
       </I18nextProvider>
