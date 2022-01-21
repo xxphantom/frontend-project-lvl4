@@ -2,6 +2,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { DefinePlugin } = require('webpack');
 
 const mode = process.env.NODE_ENV || 'development';
 
@@ -26,6 +27,9 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new MiniCssExtractPlugin(),
+    new DefinePlugin({
+      'process.env.ROLLBAR_ACCESS_TOKEN': JSON.stringify(process.env.ROLLBAR_ACCESS_TOKEN),
+    }),
   ],
   module: {
     rules: [

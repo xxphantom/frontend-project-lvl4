@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
+import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import { useLocalStorage } from 'react-use';
 import { configureStore } from '@reduxjs/toolkit';
 import i18n from 'i18next';
@@ -103,6 +104,15 @@ const ProfanityProvider = ({ children }) => {
   );
 };
 
+const rollbarConfig = {
+  accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  payload: {
+    environment: process.env.NODE_ENV,
+  },
+};
+
 const init = async (socket) => {
   openSocketListeners(socket, mapSocketEventNamesToActions);
 
@@ -118,17 +128,21 @@ const init = async (socket) => {
     });
 
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18nextInstanse}>
-        <AuthProvider>
-          <SocketProvider socket={socket}>
-            <ProfanityProvider>
-              <App />
-            </ProfanityProvider>
-          </SocketProvider>
-        </AuthProvider>
-      </I18nextProvider>
-    </Provider>
+    <ProviderRollbar config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18nextInstanse}>
+            <AuthProvider>
+              <SocketProvider socket={socket}>
+                <ProfanityProvider>
+                  <App />
+                </ProfanityProvider>
+              </SocketProvider>
+            </AuthProvider>
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </ProviderRollbar>
   );
 };
 
