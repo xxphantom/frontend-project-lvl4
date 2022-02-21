@@ -14,9 +14,9 @@ import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import Logo from 'assets/icon.jpg';
 import { useAuth } from '../hooks';
 import routes from '../routes.js';
-import Logo from '../../assets/icon.jpg';
 
 const LoginForm = ({ t }) => {
   const auth = useAuth();

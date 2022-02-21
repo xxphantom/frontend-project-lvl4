@@ -8,9 +8,9 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks';
-import routes from '../routes.js';
-import Logo from '../../assets/regIcon.jpg';
+import Logo from 'assets/regIcon.jpg';
+import { useAuth } from 'hooks';
+import routes from 'routes.js';
 
 const RegForm = ({ t }) => {
   const auth = useAuth();
