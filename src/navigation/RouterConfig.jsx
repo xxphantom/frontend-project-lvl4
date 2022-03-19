@@ -30,7 +30,9 @@ const RouterConfig = () => (
         </PublicRoute>
       </Route>
       <Route path="*">
-        <NotFound />
+        <PublicRoute>
+          <NotFound />
+        </PublicRoute>
       </Route>
     </Switch>
   </Router>
