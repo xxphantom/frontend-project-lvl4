@@ -35,6 +35,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader',

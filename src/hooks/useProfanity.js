@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ProfanityContext } from '../contexts/index.js';
+import { ProfanityContext } from 'contexts.js';
 
 const useProfanity = () => {
   const profanity = useContext(ProfanityContext);

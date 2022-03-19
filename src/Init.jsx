@@ -1,59 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
-import { useLocalStorage } from 'react-use';
-import { configureStore } from '@reduxjs/toolkit';
-import i18n from 'i18next';
+import { I18nextProvider } from 'react-i18next';
 import * as profanity from 'leo-profanity';
-import { initReactI18next, I18nextProvider } from 'react-i18next';
-import modalSlice from './features/modal/modalSlice.js';
-import { AuthContext, SocketContext, ProfanityContext } from './contexts';
-import channelsSlice, { channelsActions } from './features/channels/channelsSlice';
-import messagesSlice, { messagesActions } from './features/messages/messagesSlice';
-import resources from './locales';
+import { actions } from 'redux/slices';
+import AuthProvider from 'auth';
+import store from 'redux/store.js';
+import { SocketContext, ProfanityContext } from 'contexts.js';
+import getI18nextInstanse from 'i18n';
 import App from './App.jsx';
-
-const store = configureStore({
-  reducer: {
-    channelsInfo: channelsSlice,
-    messagesInfo: messagesSlice,
-    modalInfo: modalSlice,
-  },
-});
-
-const AuthProvider = ({ children }) => {
-  const [authData, setAuthData, removeAuthData] = useLocalStorage('user');
-  const isHasToken = !!authData;
-  const [isLogIn, setLogIn] = useState(isHasToken);
-  const logIn = ({ username, token }) => {
-    setAuthData({ username, token });
-    setLogIn(true);
-  };
-  const logOut = () => {
-    removeAuthData();
-    setLogIn(false);
-  };
-  const auth = {
-    isLogIn,
-    logIn,
-    logOut,
-    token: authData?.token,
-    username: authData?.username,
-  };
-
-  return (
-    <AuthContext.Provider value={auth}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
 
 const maxEmitTime = 2500;
 const mapSocketEventNamesToActions = {
-  removeChannel: channelsActions.channelRemoved,
-  renameChannel: channelsActions.channelRenamed,
-  newChannel: channelsActions.channelAdded,
-  newMessage: messagesActions.messageAdded,
+  removeChannel: actions.channels.channelRemoved,
+  renameChannel: actions.channels.channelRenamed,
+  newChannel: actions.channels.channelAdded,
+  newMessage: actions.messages.messageAdded,
 };
 
 const makeSocketEventEmitter = (socket, socketEvent) => (payload) => (
@@ -116,16 +78,7 @@ const rollbarConfig = {
 const init = async (socket) => {
   openSocketListeners(socket, mapSocketEventNamesToActions);
 
-  const i18nextInstanse = i18n.createInstance();
-  await i18nextInstanse.use(initReactI18next)
-    .init({
-      resources,
-      lng: 'ru',
-      fallbackLng: 'ru',
-      interpolation: {
-        escapeValue: false,
-      },
-    });
+  const i18nextInstanse = await getI18nextInstanse();
 
   return (
     <ProviderRollbar config={rollbarConfig}>
