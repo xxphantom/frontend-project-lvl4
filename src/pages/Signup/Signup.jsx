@@ -76,10 +76,10 @@ const RegForm = ({ t }) => {
                 type="text"
                 name="username"
                 innerRef={inputEl}
-                placeholder={t('nickname')}
+                placeholder={t('signup.nickname')}
                 className={getClasses('username')}
               />
-              <label htmlFor="userName">{t('nickname')}</label>
+              <label htmlFor="userName">{t('signup.nickname')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="username" />
                 {status && status.backendErrors.username ? t('signup.alreadyHaveUser') : null}

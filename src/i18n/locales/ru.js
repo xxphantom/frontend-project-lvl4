@@ -1,10 +1,10 @@
 export default {
   translation: {
     networkError: 'Ошибка соединения',
-    chatName: 'Hexlet чат',
+    chatName: 'Hexlet Chat',
     exit: 'Выйти',
     logIn: 'Войти',
-    nickname: 'Имя пользователя',
+    nickname: 'Ваш ник',
     password: 'Пароль',
     login: {
       altImageText: 'Страница входа',
@@ -13,12 +13,13 @@ export default {
       wrongCredentials: 'Неверные имя пользователя или пароль',
     },
     signup: {
+      nickname: 'Имя пользователя',
       altImageText: 'Страница регистрации',
-      labelForm: 'Регистрация',
+      labelForm: 'Ваш ник',
       maybeHaveAccount: 'Уже есть аккаунт?',
-      registration: 'Регистрация',
+      registration: 'Ваш ник',
       confirmPassword: 'Подтвердите пароль',
-      submitForm: 'Зарегистрироваться',
+      submitForm: 'Ваш ник',
     },
     validation: {
       alreadyHaveUser: 'Пользователь уже существует',
