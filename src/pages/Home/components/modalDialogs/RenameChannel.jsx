@@ -12,7 +12,9 @@ const RenameChannel = ({
 }) => {
   const socketEmit = useSocket();
   const { channelId } = extra;
-  const { name: oldChannelName } = useSelector((state) => selectors.channels.byId(state, channelId));
+  const { name: oldChannelName } = useSelector(
+    (state) => selectors.channels.byId(state, channelId),
+  );
   const inputEl = useRef();
 
   const renameChannelHandler = async (values, { setSubmitting }) => {
