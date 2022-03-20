@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import * as Yup from 'yup';
+import { createNewUserSchema } from 'validation/schema.js';
 import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -22,19 +22,7 @@ const RegForm = ({ t }) => {
 
   const [existingNames, setExistingNames] = useState([]);
 
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .required(t('validation.required'))
-      .min(3, t('validation.minNameLength'))
-      .max(20, t('validation.maxNameLength'))
-      .notOneOf(existingNames, t('validation.alreadyHaveUser')),
-    password: Yup.string()
-      .required(t('validation.required'))
-      .min(6, t('validation.minPasswordLength')),
-    passwordConfirm: Yup.string()
-      .required(t('validation.required'))
-      .oneOf([Yup.ref('password')], t('validation.passwordMismatch')),
-  });
+  const validationSchema = createNewUserSchema(existingNames, t);
 
   const handleSubmit = async (values, { setFieldTouched }) => {
     const { username, password } = values;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { createChannelValidationSchema } from 'validation/schema.js';
+import { createChannelSchema } from 'validation/schema.js';
 import { actions, selectors } from 'redux/slices';
 import AddChannel from './AddChannel.jsx';
 import RenameChannel from './RenameChannel.jsx';
@@ -21,7 +21,7 @@ const ModalComponent = () => {
   const { isOpen, type, extra } = useSelector(selectors.modalInfo);
   const channelNames = useSelector(selectors.channels.names);
 
-  const validationSchema = createChannelValidationSchema(channelNames, t);
+  const validationSchema = createChannelSchema(channelNames, t);
 
   if (!isOpen) {
     return null;
