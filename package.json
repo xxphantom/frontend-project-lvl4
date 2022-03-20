@@ -2,16 +2,19 @@
   "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "",
-  "main": "server/index.js",
+  "main": "server/plugin.js",
   "type": "module",
   "engines": {
     "node": "14.x"
   },
   "scripts": {
-    "test": "echo 'no tests for this project'",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "prebuild": "rm -rf dist",
-    "build": "NODE_ENV=production npx webpack --mode production",
-    "start": "node bin/slack.js"
+    "build": "webpack",
+    "start": "fastify start server/plugin.js -l info -P"
+  },
+    "jest": {
+    "transform": {}
   },
   "repository": {
     "type": "git",
@@ -29,6 +32,7 @@
     "core-js": "^3.20.2",
     "debug": "^4.3.3",
     "fastify": "^3.25.3",
+    "fastify-cli": "^2.15.0",
     "fastify-formbody": "^5.2.0",
     "fastify-jwt": "^2.5.0",
     "fastify-secure-session": "^2.3.1",
@@ -42,6 +46,7 @@
     "leo-profanity": "^1.5.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^1.6.2",
+    "npm": "^8.5.5",
     "pino-pretty": "^4.8.0",
     "point-of-view": "^4.16.0",
     "popper.js": "^1.16.1",
@@ -61,24 +66,27 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.7",
+    "@babel/cli": "^7.17.3",
+    "@babel/core": "^7.17.5",
     "@babel/node": "^7.16.8",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/preset-env": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
-    "babel-eslint": "^10.1.0",
+    "@jest/globals": "^27.5.1",
+    "@babel/eslint-parser": "^7.17.0",
     "babel-loader": "^8.2.3",
     "babel-plugin-module-resolver": "^4.1.0",
     "css-loader": "^5.2.7",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint": "^8.9.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-import-resolver-babel-module": "^5.3.1",
     "eslint-plugin-functional": "^3.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^27.5.1",
+    "jest-cli": "^27.5.1",
     "node-sass": "^7.0.1",
     "nodemon": "^2.0.15",
     "postcss-loader": "^5.3.0",
