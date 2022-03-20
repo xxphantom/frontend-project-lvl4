@@ -28,7 +28,7 @@ export default {
       maxNameLength: 'От 3 до 20 символов',
       minPasswordLength: 'Не менее 6 символов',
       maxPasswordLength: 'Не более 200 символов',
-      passwordMismatch: 'Пароли не совпадают',
+      passwordMismatch: 'Пароли должны совпадать',
     },
     channelValidation: {
       minLength: 'От 3 до 20 символов',
