@@ -20,7 +20,7 @@ function AuthProvider({ children }) {
     logOut,
     token: authData?.token,
     username: authData?.username,
-  }));
+  })[authData]);
 
   return (
     <AuthContext.Provider value={auth}>
