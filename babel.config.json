@@ -4,6 +4,7 @@
     "@babel/preset-react"
   ],
   "plugins": [
+    "@babel/plugin-proposal-export-default-from",
     ["module-resolver", {
       "root": ["./src"],
       "alias": {

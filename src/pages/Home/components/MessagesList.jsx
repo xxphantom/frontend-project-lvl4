@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { selectors } from 'redux/slices';
 import MessageForm from './MessageForm.jsx';
 
-const MessagesList = () => {
+function MessagesList() {
   const { t } = useTranslation();
   const currentChannel = useSelector(selectors.channels.currentChannel);
   const messages = useSelector(selectors.messages.currentMessages);
@@ -51,6 +51,6 @@ const MessagesList = () => {
       </div>
     </div>
   );
-};
+}
 
 export default MessagesList;

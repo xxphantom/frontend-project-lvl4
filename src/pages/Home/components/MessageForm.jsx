@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { selectors } from 'redux/slices';
 import { useAuth, useSocket, useProfanity } from 'hooks';
 
-const AddMessageForm = () => {
+function AddMessageForm() {
   const { t } = useTranslation();
   const socketEmit = useSocket();
   const { username } = useAuth();
@@ -72,6 +72,6 @@ const AddMessageForm = () => {
       </Form>
     </div>
   );
-};
+}
 
 export default AddMessageForm;

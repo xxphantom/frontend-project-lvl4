@@ -7,9 +7,9 @@ import { toast } from 'react-toastify';
 import { selectors } from 'redux/slices';
 import { useSocket } from 'hooks';
 
-const RenameChannel = ({
+function RenameChannel({
   closeModal, extra, validationSchema, t,
-}) => {
+}) {
   const socketEmit = useSocket();
   const { channelId } = extra;
   const { name: oldChannelName } = useSelector(
@@ -74,6 +74,6 @@ const RenameChannel = ({
       </Form.Group>
     </Form>
   );
-};
+}
 
 export default RenameChannel;

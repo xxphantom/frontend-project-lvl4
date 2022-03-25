@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { actions, selectors } from 'redux/slices';
 
-const ChannelsList = () => {
+function ChannelsList() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const channels = useSelector(selectors.channels.all);
@@ -64,5 +64,5 @@ const ChannelsList = () => {
       </ul>
     </div>
   );
-};
+}
 export default ChannelsList;

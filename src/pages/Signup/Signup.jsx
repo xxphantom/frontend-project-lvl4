@@ -12,7 +12,7 @@ import Logo from 'assets/registration.jpg';
 import { useAuth } from 'hooks';
 import routes from 'routes.js';
 
-const RegForm = ({ t }) => {
+function RegForm({ t }) {
   const auth = useAuth();
   const inputEl = useRef(null);
 
@@ -111,9 +111,9 @@ const RegForm = ({ t }) => {
       }}
     </Formik>
   );
-};
+}
 
-const Signup = () => {
+function Signup() {
   const { t } = useTranslation();
   return (
     <div className="container-fluid h-100">
@@ -137,6 +137,6 @@ const Signup = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Signup;

@@ -12,7 +12,7 @@ const spinnerBox = (
   </div>
 );
 
-const Home = () => {
+function Home() {
   const { t } = useTranslation();
   const isDataFetched = useInitChatData();
 
@@ -29,6 +29,6 @@ const Home = () => {
       </Row>
     </Container>
   );
-};
+}
 
 export default Home;

@@ -4,7 +4,7 @@ import Image from 'react-bootstrap/Image';
 import notFound from 'assets/notFound.png';
 import { useTranslation, Trans } from 'react-i18next';
 
-const NotFound = () => {
+function NotFound() {
   const { t } = useTranslation();
   return (
     <div className="text-center">
@@ -18,6 +18,6 @@ const NotFound = () => {
       </p>
     </div>
   );
-};
+}
 
 export default NotFound;

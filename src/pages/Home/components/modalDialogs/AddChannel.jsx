@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import cn from 'classnames';
 import { useSocket } from 'hooks';
 
-const AddChannel = ({ closeModal, validationSchema, t }) => {
+function AddChannel({ closeModal, validationSchema, t }) {
   const inputEl = useRef();
   const emit = useSocket();
 
@@ -64,6 +64,6 @@ const AddChannel = ({ closeModal, validationSchema, t }) => {
       </Form.Group>
     </Form>
   );
-};
+}
 
 export default AddChannel;

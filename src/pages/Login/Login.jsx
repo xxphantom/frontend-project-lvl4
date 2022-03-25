@@ -16,7 +16,7 @@ import { createLoginSchema } from 'validation/schema.js';
 import { useAuth } from 'hooks';
 import routes from 'routes.js';
 
-const LoginForm = ({ t }) => {
+function LoginForm({ t }) {
   const auth = useAuth();
   const inputEl = useRef(null);
   const loginSchema = createLoginSchema(t);
@@ -99,9 +99,9 @@ const LoginForm = ({ t }) => {
       }}
     </Formik>
   );
-};
+}
 
-const Login = () => {
+function Login() {
   const { t } = useTranslation();
   return (
     <div className="container-fluid h-100">
@@ -125,6 +125,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;

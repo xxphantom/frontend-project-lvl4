@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useSocket } from 'hooks';
 import { selectors } from 'redux/slices';
 
-const RemoveChannel = ({ closeModal, extra, t }) => {
+function RemoveChannel({ closeModal, extra, t }) {
   const { channelId } = extra;
   const socketEmit = useSocket();
   const { name: channelName } = useSelector((state) => selectors.channels.byId(state, channelId));
@@ -42,6 +42,6 @@ const RemoveChannel = ({ closeModal, extra, t }) => {
       </div>
     </>
   );
-};
+}
 
 export default RemoveChannel;

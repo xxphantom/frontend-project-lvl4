@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'hooks';
 
-export default (props) => {
+export default function Navbar(props) {
   const { children } = props;
   const { t } = useTranslation();
   const { isLogIn, logOut } = useAuth();
@@ -25,4 +25,4 @@ export default (props) => {
       <ToastContainer />
     </div>
   );
-};
+}

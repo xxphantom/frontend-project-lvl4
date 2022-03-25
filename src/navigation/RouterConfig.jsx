@@ -11,31 +11,33 @@ import PrivateRoute from 'navigation/PrivateRoute.jsx';
 import PublicRoute from 'navigation/PublicRoute.jsx';
 import NotFound from 'navigation/NotFound.jsx';
 
-const RouterConfig = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/">
-        <PrivateRoute>
-          <Home />
-        </PrivateRoute>
-      </Route>
-      <Route path="/login">
-        <PublicRoute restricted>
-          <Login />
-        </PublicRoute>
-      </Route>
-      <Route path="/signup">
-        <PublicRoute restricted>
-          <Signup />
-        </PublicRoute>
-      </Route>
-      <Route path="*">
-        <PublicRoute>
-          <NotFound />
-        </PublicRoute>
-      </Route>
-    </Switch>
-  </Router>
-);
+function RouterConfig() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        </Route>
+        <Route path="/login">
+          <PublicRoute restricted>
+            <Login />
+          </PublicRoute>
+        </Route>
+        <Route path="/signup">
+          <PublicRoute restricted>
+            <Signup />
+          </PublicRoute>
+        </Route>
+        <Route path="*">
+          <PublicRoute>
+            <NotFound />
+          </PublicRoute>
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
 
 export default RouterConfig;

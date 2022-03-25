@@ -36,7 +36,7 @@ const makeSocketEventEmitter = (socket, socketEvent) => (payload) => (
     socket.volatile.emit(socketEvent, payload, withTimeout());
   }));
 
-const SocketProvider = ({ socket, children }) => {
+function SocketProvider({ socket, children }) {
   const emitters = Object.keys(mapSocketEventNamesToActions)
     .reduce((acc, socketEventName) => (
       { ...acc, [socketEventName]: makeSocketEventEmitter(socket, socketEventName) }
@@ -47,7 +47,7 @@ const SocketProvider = ({ socket, children }) => {
       {children}
     </SocketContext.Provider>
   );
-};
+}
 
 const openSocketListeners = (socket, eventsToActions) => {
   Object.entries(eventsToActions).forEach(([socketEventName, action]) => {
@@ -57,14 +57,14 @@ const openSocketListeners = (socket, eventsToActions) => {
   });
 };
 
-const ProfanityProvider = ({ children }) => {
+function ProfanityProvider({ children }) {
   profanity.loadDictionary('ru');
   return (
     <ProfanityContext.Provider value={profanity}>
       {children}
     </ProfanityContext.Provider>
   );
-};
+}
 
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,

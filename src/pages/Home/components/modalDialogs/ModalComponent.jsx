@@ -14,7 +14,7 @@ const modals = {
   RemoveChannel,
 };
 
-const ModalComponent = () => {
+function ModalComponent() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -48,6 +48,6 @@ const ModalComponent = () => {
       </Modal.Body>
     </Modal>
   );
-};
+}
 
 export default ModalComponent;
