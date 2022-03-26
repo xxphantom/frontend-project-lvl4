@@ -8,9 +8,9 @@ import { createNewUserSchema } from 'validation/schema.js';
 import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
-import Logo from 'assets/registration.jpg';
-import { useAuth } from 'hooks';
-import routes from 'routes.js';
+import Logo from '../../assets/registration.jpg';
+import { useAuth } from '../hooks';
+import routes from '../routes.js';
 
 function RegForm({ t }) {
   const auth = useAuth();
@@ -27,8 +27,8 @@ function RegForm({ t }) {
   const handleSubmit = async (values, { setFieldTouched }) => {
     const { username, password } = values;
     try {
-      const responce = await axios.post(routes.registrationPath(), { username, password });
-      auth.logIn(responce.data);
+      const response = await axios.post(routes.registrationPath(), { username, password });
+      auth.logIn(response.data);
     } catch (err) {
       if (err.response.status === 409) {
         setExistingNames((names) => [...names, username]);

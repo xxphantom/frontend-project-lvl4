@@ -28,3 +28,9 @@ export const createNewUserSchema = (existingNames, t) => Yup.object({
     .required(t('validation.required'))
     .oneOf([Yup.ref('password')], t('validation.passwordMismatch')),
 });
+
+export const createChatMessageSchema = () => Yup.object({
+  message: Yup.string()
+    .required()
+    .max(3000),
+});

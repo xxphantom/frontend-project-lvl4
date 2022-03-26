@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { selectors } from 'redux/slices';
+import { selectors } from '../../redux/slices';
 import MessageForm from './MessageForm.jsx';
 
 function MessagesList() {

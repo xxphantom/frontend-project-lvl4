@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { createChannelSchema } from 'validation/schema.js';
-import { actions, selectors } from 'redux/slices';
+import { createChannelSchema } from '../../validation/schema.js';
+import { actions, selectors } from '../../redux/slices';
 import AddChannel from './AddChannel.jsx';
 import RenameChannel from './RenameChannel.jsx';
 import RemoveChannel from './RemoveChannel.jsx';
@@ -18,7 +18,7 @@ function ModalComponent() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { isOpen, type, extra } = useSelector(selectors.modalInfo);
+  const { isOpen, type, extra } = useSelector(selectors.modal);
   const channelNames = useSelector(selectors.channels.names);
 
   const validationSchema = createChannelSchema(channelNames, t);
@@ -28,7 +28,7 @@ function ModalComponent() {
   }
 
   const closeModal = () => {
-    dispatch(actions.modal.closeModal());
+    dispatch(actions.closeModal());
   };
 
   const Component = modals[type];

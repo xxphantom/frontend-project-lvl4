@@ -3,51 +3,21 @@ import { Provider } from 'react-redux';
 import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import { I18nextProvider } from 'react-i18next';
 import * as profanity from 'leo-profanity';
-import { actions } from 'redux/slices';
-import AuthProvider from 'auth';
+
 import store from 'redux/store.js';
-import { SocketContext, ProfanityContext } from 'contexts.js';
-import getI18nextInstanse from 'i18n';
+import getI18nextInstanse from './i18n';
+import { actions } from './redux/slices';
+import AuthProvider from './auth/AuthProvider.jsx';
+import SocketProvider from './socket/SocketProvider.jsx';
+import { ProfanityContext } from './contexts';
 import App from './App.jsx';
 
-const maxEmitTime = 2500;
 const mapSocketEventNamesToActions = {
-  removeChannel: actions.channels.channelRemoved,
-  renameChannel: actions.channels.channelRenamed,
-  newChannel: actions.channels.channelAdded,
-  newMessage: actions.messages.messageAdded,
+  removeChannel: actions.channelRemoved,
+  renameChannel: actions.channelRenamed,
+  newChannel: actions.channelAdded,
+  newMessage: actions.messageAdded,
 };
-
-const makeSocketEventEmitter = (socket, socketEvent) => (payload) => (
-  new Promise((resolve, reject) => {
-    const withTimeout = () => {
-      const timerId = setTimeout(() => {
-        reject(Error('Socket timed out! Check your network connection'));
-      }, maxEmitTime);
-
-      return (response) => {
-        clearTimeout(timerId);
-        if (response.status === 'ok') {
-          resolve('success');
-        }
-        reject(Error(`Socket response status: ${response.status}`));
-      };
-    };
-    socket.volatile.emit(socketEvent, payload, withTimeout());
-  }));
-
-function SocketProvider({ socket, children }) {
-  const emitters = Object.keys(mapSocketEventNamesToActions)
-    .reduce((acc, socketEventName) => (
-      { ...acc, [socketEventName]: makeSocketEventEmitter(socket, socketEventName) }
-    ), {});
-
-  return (
-    <SocketContext.Provider value={emitters}>
-      {children}
-    </SocketContext.Provider>
-  );
-}
 
 const openSocketListeners = (socket, eventsToActions) => {
   Object.entries(eventsToActions).forEach(([socketEventName, action]) => {

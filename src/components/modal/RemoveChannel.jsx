@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import { useSocket } from 'hooks';
-import { selectors } from 'redux/slices';
+import { useSocket } from '../../hooks';
+import { selectors } from '../../redux/slices';
 
 function RemoveChannel({ closeModal, extra, t }) {
   const { channelId } = extra;

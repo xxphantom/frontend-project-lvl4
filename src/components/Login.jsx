@@ -11,10 +11,10 @@ import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import Logo from 'assets/login.jpg';
-import { createLoginSchema } from 'validation/schema.js';
-import { useAuth } from 'hooks';
-import routes from 'routes.js';
+import { createLoginSchema } from '../validation/schema.js';
+import { useAuth } from '../hooks';
+import routes from '../routes.js';
+import Logo from '../../assets/login.jpg';
 
 function LoginForm({ t }) {
   const auth = useAuth();

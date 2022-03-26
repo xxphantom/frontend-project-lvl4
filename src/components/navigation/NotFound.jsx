@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
-import notFound from 'assets/notFound.png';
 import { useTranslation, Trans } from 'react-i18next';
+import notFound from '../../../assets/notFound.png';
 
 function NotFound() {
   const { t } = useTranslation();

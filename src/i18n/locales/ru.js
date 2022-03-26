@@ -19,7 +19,7 @@ export default {
       maybeHaveAccount: 'Уже есть аккаунт?',
       registration: 'Ваш ник',
       confirmPassword: 'Подтвердите пароль',
-      submitForm: 'Ваш ник',
+      submitForm: 'Зарегистрироваться',
     },
     validation: {
       alreadyHaveUser: 'Пользователь уже существует',

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { SocketContext } from 'contexts.js';
+import { SocketContext } from '../contexts';
 
 const useAuth = () => {
   const auth = useContext(SocketContext);

@@ -1,26 +1,32 @@
 import React, { useState, useMemo } from 'react';
-import { AuthContext } from 'contexts';
 import { useLocalStorage } from 'react-use';
+import { AuthContext } from '../contexts';
 
 function AuthProvider({ children }) {
   const [authData, setAuthData, removeAuthData] = useLocalStorage('user');
-  const isHasToken = !!authData;
-  const [isLogIn, setLogIn] = useState(isHasToken);
-  const logIn = ({ username, token }) => {
-    setAuthData({ username, token });
+
+  const username = authData ? authData.username : null;
+  const token = authData ? authData.token : null;
+
+  const [isLogIn, setLogIn] = useState(!!token);
+
+  const logIn = (authParams) => {
+    setAuthData(authParams);
     setLogIn(true);
   };
+
   const logOut = () => {
     removeAuthData();
     setLogIn(false);
   };
+
   const auth = useMemo(() => ({
     isLogIn,
     logIn,
     logOut,
-    token: authData?.token,
-    username: authData?.username,
-  })[authData]);
+    token,
+    username,
+  }), [token, isLogIn]);
 
   return (
     <AuthContext.Provider value={auth}>

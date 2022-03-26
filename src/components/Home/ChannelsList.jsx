@@ -4,7 +4,8 @@ import {
   ButtonGroup, Dropdown, Button, DropdownButton,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { actions, selectors } from 'redux/slices';
+
+import { actions, selectors } from '../../redux/slices';
 
 function ChannelsList() {
   const dispatch = useDispatch();
@@ -13,11 +14,11 @@ function ChannelsList() {
   const currentChannelId = useSelector(selectors.channels.currentId);
 
   const handleShowModal = (modalType, extra = null) => dispatch(
-    actions.modal.openModal({ modalType, extra }),
+    actions.openModal({ modalType, extra }),
   );
 
   const changeChannelHandler = (id) => () => {
-    dispatch(actions.channels.currentChannelChanged(id));
+    dispatch(actions.currentChannelChanged(id));
   };
 
   const dropDownButtons = (channelId, variant) => (

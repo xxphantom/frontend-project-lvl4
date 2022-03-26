@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import ChannelsList from 'pages/Home/components/ChannelsList.jsx';
-import MessagesList from 'pages/Home/components/MessagesList.jsx';
-import ModalComponent from 'pages/Home/components/modalDialogs';
-import useInitChatData from 'pages/Home/hooks/useInitChatData.js';
+
+import ChannelsList from './ChannelsList.jsx';
+import MessagesList from './MessagesList.jsx';
+import ModalComponent from '../modal';
+
+import useFetchChatData from '../../hooks/useFetchChatData.js';
 
 const spinnerBox = (
   <div className="h-100 d-flex justify-content-center align-items-center">
@@ -14,7 +16,7 @@ const spinnerBox = (
 
 function Home() {
   const { t } = useTranslation();
-  const isDataFetched = useInitChatData();
+  const isDataFetched = useFetchChatData();
 
   if (!isDataFetched) {
     return spinnerBox;

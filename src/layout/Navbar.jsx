@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from 'hooks';
+import useAuth from '../hooks/useAuth.js';
 
 export default function Navbar(props) {
   const { children } = props;

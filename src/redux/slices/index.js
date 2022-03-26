@@ -4,18 +4,18 @@ import messagesSlice, { messagesActions, messagesSelectors } from './messagesSli
 
 export const slices = {
   channels: channelsSlice,
-  modals: modalSlice,
+  modal: modalSlice,
   messages: messagesSlice,
 };
 
 export const actions = {
-  channels: channelsActions,
-  modal: modalActions,
-  messages: messagesActions,
+  ...channelsActions,
+  ...modalActions,
+  ...messagesActions,
 };
 
 export const selectors = {
   channels: channelsSelectors,
+  modal: selectModalInfo,
   messages: messagesSelectors,
-  modalInfo: selectModalInfo,
 };

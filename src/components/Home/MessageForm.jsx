@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { selectors } from 'redux/slices';
-import { useAuth, useSocket, useProfanity } from 'hooks';
+import { selectors } from '../../redux/slices';
+import { useAuth, useSocket, useProfanity } from '../../hooks';
+import { createChatMessageSchema } from '../../validation/schema.js';
 
 function AddMessageForm() {
   const { t } = useTranslation();
@@ -16,11 +16,7 @@ function AddMessageForm() {
   const profanity = useProfanity();
 
   const inputEl = useRef(null);
-  const validationSchema = Yup.object({
-    message: Yup.string()
-      .required()
-      .max(3000),
-  });
+  const validationSchema = createChatMessageSchema();
 
   useEffect(() => {
     inputEl.current.focus();

@@ -1,51 +1,41 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import cn from 'classnames';
 import { toast } from 'react-toastify';
-import { selectors } from 'redux/slices';
-import { useSocket } from 'hooks';
+import cn from 'classnames';
+import { useSocket } from '../../hooks';
 
-function RenameChannel({
-  closeModal, extra, validationSchema, t,
-}) {
-  const socketEmit = useSocket();
-  const { channelId } = extra;
-  const { name: oldChannelName } = useSelector(
-    (state) => selectors.channels.byId(state, channelId),
-  );
+function AddChannel({ closeModal, validationSchema, t }) {
   const inputEl = useRef();
+  const emit = useSocket();
 
-  const renameChannelHandler = async (values, { setSubmitting }) => {
-    const trimmedInput = values.channelName.trim();
-    const channel = { id: channelId, name: trimmedInput };
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
+
+  const addChannelHandler = async (values, { setSubmitting }) => {
+    const channel = { name: values.channelName.trim() };
     try {
-      await socketEmit.renameChannel(channel);
+      await emit.newChannel(channel);
       closeModal();
-      toast.success(t('modals.RenameChannel.renamed'));
+      toast.success(t('modals.AddChannel.added'));
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
+      toast.error(t('networkError'));
       setSubmitting(false);
       inputEl.current.select();
-      toast.error(t('networkError'));
     }
   };
 
   const formik = useFormik({
-    initialValues: { channelName: oldChannelName },
+    initialValues: { channelName: '' },
     validationSchema,
-    onSubmit: renameChannelHandler,
+    onSubmit: addChannelHandler,
   });
-
-  useEffect(() => {
-    setTimeout(() => {
-      inputEl.current.select();
-    }, 0);
-  }, []);
 
   const isErrorShown = formik.touched.channelName && !formik.isValid;
   const className = cn('mb-2', { 'is-invalid': isErrorShown });
+
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
       <Form.Group controlId="channelName">
@@ -53,7 +43,7 @@ function RenameChannel({
           ref={inputEl}
           disabled={formik.isSubmitting}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          onBlur={formik.onBlur}
           value={formik.values.channelName}
           name="channelName"
           className={className}
@@ -76,4 +66,4 @@ function RenameChannel({
   );
 }
 
-export default RenameChannel;
+export default AddChannel;

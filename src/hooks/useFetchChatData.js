@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { useAuth } from 'hooks';
 import { useTranslation } from 'react-i18next';
-import { actions } from 'redux/slices';
 import { toast } from 'react-toastify';
-import routes from 'routes.js';
+import { actions } from '../redux/slices';
+import routes from '../routes.js';
+import useAuth from './useAuth.js';
 
-const useInitChatData = () => {
+const useFetchChatData = () => {
   const { t } = useTranslation();
   const [isDataFetched, setIsDataFetched] = useState(false);
   const { token, logOut } = useAuth();
@@ -23,8 +23,8 @@ const useInitChatData = () => {
       try {
         const { data } = await axios.get(routes.dataPath(), { headers });
         const { messages, channels, currentChannelId } = data;
-        dispatch(actions.channels.initChannels({ channels, currentChannelId }));
-        dispatch(actions.messages.initMessages(messages));
+        dispatch(actions.initChannels({ channels, currentChannelId }));
+        dispatch(actions.initMessages(messages));
         setIsDataFetched(true);
       } catch (err) {
         if (err.response?.status === 401) {
@@ -42,4 +42,4 @@ const useInitChatData = () => {
   return isDataFetched;
 };
 
-export default useInitChatData;
+export default useFetchChatData;
