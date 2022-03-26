@@ -48,8 +48,8 @@ function AddMessageForm() {
         <InputGroup className="has-validation">
           <Form.Control
             ref={inputEl}
-            name="message"
-            data-testid="new-message"
+            name="body"
+            aria-label="Новое сообщение"
             disabled={formik.isSubmitting}
             onChange={formik.handleChange}
             value={formik.values.message}

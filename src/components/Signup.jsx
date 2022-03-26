@@ -67,7 +67,7 @@ function RegForm({ t }) {
                 placeholder={t('signup.nickname')}
                 className={getClasses('username')}
               />
-              <label htmlFor="userName">{t('signup.nickname')}</label>
+              <label htmlFor="username">{t('signup.nickname')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="username" />
                 {status && status.backendErrors.username ? t('signup.alreadyHaveUser') : null}
@@ -94,7 +94,7 @@ function RegForm({ t }) {
                 placeholder={t('signup.confirmPassword')}
                 className={getClasses('passwordConfirm')}
               />
-              <label htmlFor="password">{t('signup.confirmPassword')}</label>
+              <label htmlFor="passwordConfirm">{t('signup.confirmPassword')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="passwordConfirm" />
               </div>
