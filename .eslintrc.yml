@@ -19,7 +19,6 @@ env:
 
 settings:
   import/resolver:
-    - babel-module
     - node
     - webpack
 
