@@ -68,10 +68,6 @@ function LoginForm({ t }) {
                 className={getClasses('username')}
               />
               <label htmlFor="username">{t('nickname')}</label>
-              <div className="invalid-tooltip">
-                <ErrorMessage name="username" />
-                {status && status.authError ? t('login.wrongCredentials') : null}
-              </div>
             </div>
             <div className="form-floating mb-4 form-group">
               <Field
