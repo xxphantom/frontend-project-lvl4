@@ -4,7 +4,7 @@ import { Provider as ProviderRollbar, ErrorBoundary } from '@rollbar/react';
 import { I18nextProvider } from 'react-i18next';
 import * as profanity from 'leo-profanity';
 
-import store from 'redux/store.js';
+import store from './redux/store.js';
 import getI18nextInstanse from './i18n';
 import { actions } from './redux/slices';
 import AuthProvider from './auth/AuthProvider.jsx';

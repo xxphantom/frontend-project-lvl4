@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import { createNewUserSchema } from 'validation/schema.js';
 import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Logo from '../../assets/registration.jpg';
 import { useAuth } from '../hooks';
 import routes from '../routes.js';
+import { createNewUserSchema } from '../validation/schema.js';
 
 function RegForm({ t }) {
   const auth = useAuth();
