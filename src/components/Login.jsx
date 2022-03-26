@@ -67,7 +67,7 @@ function LoginForm({ t }) {
                 placeholder={t('nickname')}
                 className={getClasses('username')}
               />
-              <label htmlFor="userName">{t('nickname')}</label>
+              <label htmlFor="username">{t('nickname')}</label>
               <div className="invalid-tooltip">
                 <ErrorMessage name="username" />
                 {status && status.authError ? t('login.wrongCredentials') : null}
