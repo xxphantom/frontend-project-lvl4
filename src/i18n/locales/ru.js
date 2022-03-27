@@ -40,6 +40,7 @@ export default {
       channels: 'Каналы',
       renameChannel: 'Переименовать',
       deleteChannel: 'Удалить',
+      manageChannel: 'Управление каналом',
     },
     messageForm: {
       placeholder: 'Введите сообщение...',
@@ -51,6 +52,7 @@ export default {
       messages_many: '{{count}} соощений',
     },
     modals: {
+      channelName: 'Имя канала',
       cancel: 'Отменить',
       send: 'Отправить',
       inputChannelName: 'Введите название канала',

@@ -22,7 +22,12 @@ function ChannelsList() {
   };
 
   const dropDownButtons = (channelId, variant) => (
-    <DropdownButton variant={variant} as={ButtonGroup} title="" id="bg-nested-dropdown">
+    <DropdownButton
+      variant={variant}
+      as={ButtonGroup}
+      title={<span className="visually-hidden">{t('channelsList.manageChannel')}</span>}
+      id="bg-nested-dropdown"
+    >
       <Dropdown.Item onClick={() => handleShowModal('RenameChannel', { channelId })} eventKey="1">{t('channelsList.renameChannel')}</Dropdown.Item>
       <Dropdown.Item onClick={() => handleShowModal('RemoveChannel', { channelId })} eventKey="2">{t('channelsList.deleteChannel')}</Dropdown.Item>
     </DropdownButton>

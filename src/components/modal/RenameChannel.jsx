@@ -48,7 +48,7 @@ function RenameChannel({
   const className = cn('mb-2', { 'is-invalid': isErrorShown });
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="channelName">
+      <Form.Group>
         <Form.Control
           ref={inputEl}
           disabled={formik.isSubmitting}
@@ -60,6 +60,7 @@ function RenameChannel({
           type="text"
           placeholder={t('modals.inputChannelName')}
         />
+        <Form.Label visuallyHidden htmlFor="channelName">{t('modals.channelName')}</Form.Label>
         {isErrorShown
           ? <Form.Control.Feedback type="invalid" feedback="">{formik.errors.channelName}</Form.Control.Feedback>
           : null}
