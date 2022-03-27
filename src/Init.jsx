@@ -28,7 +28,6 @@ const openSocketListeners = (socket, eventsToActions) => {
 };
 
 function ProfanityProvider({ children }) {
-  profanity.loadDictionary('ru');
   return (
     <ProfanityContext.Provider value={profanity}>
       {children}
