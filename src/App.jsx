@@ -15,8 +15,8 @@ import NotFound from './components/navigation/NotFound.jsx';
 
 export default function App() {
   return (
-    <Navbar>
-      <Router>
+    <Router>
+      <Navbar>
         <Switch>
           <Route exact path="/">
             <PrivateRoute>
@@ -39,7 +39,7 @@ export default function App() {
             </PublicRoute>
           </Route>
         </Switch>
-      </Router>
-    </Navbar>
+      </Navbar>
+    </Router>
   );
 }
