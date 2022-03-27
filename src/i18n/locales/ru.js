@@ -15,7 +15,7 @@ export default {
     signup: {
       nickname: 'Имя пользователя',
       altImageText: 'Страница регистрации',
-      labelForm: 'Ваш ник',
+      labelForm: 'Регистрация',
       maybeHaveAccount: 'Уже есть аккаунт?',
       registration: 'Ваш ник',
       confirmPassword: 'Подтвердите пароль',

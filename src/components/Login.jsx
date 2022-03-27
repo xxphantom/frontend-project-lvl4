@@ -26,7 +26,7 @@ function LoginForm({ t }) {
   }, []);
 
   const handleSubmit = async (values, { setStatus }) => {
-    const responce = await axios.post(routes.loginPath(), values)
+    const response = await axios.post(routes.loginPath(), values)
       .catch((err) => {
         if (err.response?.status === 401) {
           setStatus({ authError: true });
@@ -34,7 +34,7 @@ function LoginForm({ t }) {
           toast.error(t('networkError'));
         }
       });
-    const { token, username } = responce.data;
+    const { token, username } = response.data;
     setStatus({ authError: false });
     auth.logIn({ token, username });
   };
