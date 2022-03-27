@@ -9,7 +9,7 @@ import { selectors } from '../../redux/slices';
 function RemoveChannel({ closeModal, extra, t }) {
   const { channelId } = extra;
   const socketEmit = useSocket();
-  const { name: channelName } = useSelector((state) => selectors.channels.byId(state, channelId));
+  const channel = useSelector((state) => selectors.channels.byId(state, channelId));
 
   const deleteChannelHandler = async () => {
     try {
@@ -30,7 +30,7 @@ function RemoveChannel({ closeModal, extra, t }) {
   return (
     <>
       <p className="lead">
-        {t('modals.RemoveChannel.question', { channelName })}
+        {t('modals.RemoveChannel.question', { channelName: channel?.name })}
       </p>
       <div className="d-flex justify-content-end">
         <Button disabled={formik.isSubmitting} className="me-2" variant="secondary" onClick={closeModal}>
