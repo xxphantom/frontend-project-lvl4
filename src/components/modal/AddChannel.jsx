@@ -46,6 +46,7 @@ function AddChannel({ closeModal, validationSchema, t }) {
           onBlur={formik.onBlur}
           value={formik.values.channelName}
           name="channelName"
+          id="channelName"
           className={className}
           type="text"
           placeholder={t('modals.inputChannelName')}

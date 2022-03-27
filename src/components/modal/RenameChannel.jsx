@@ -56,6 +56,7 @@ function RenameChannel({
           onBlur={formik.handleBlur}
           value={formik.values.channelName}
           name="channelName"
+          id="channelName"
           className={className}
           type="text"
           placeholder={t('modals.inputChannelName')}
