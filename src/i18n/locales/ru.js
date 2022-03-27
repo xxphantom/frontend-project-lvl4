@@ -68,7 +68,7 @@ export default {
         question: 'Удалить канал {{channelName}}?',
         title: 'Удалить канал',
         remove: 'Удалить',
-        removed: 'Канал удален',
+        removed: 'Канал удалён',
       },
     },
     notFound: {
