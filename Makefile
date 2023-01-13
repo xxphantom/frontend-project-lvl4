@@ -1,30 +1,14 @@
-install: install-deps
+lint-frontend:
+	make -C frontend lint
 
-start:
-	heroku local -f Procfile.dev
-
-start-backend:
-	npm start --watch --verbose-watch
-
-start-frontend:
-	npx webpack serve
-
-install-deps:
+install:
 	npm ci
 
-build:
-	npm run build
+start-frontend:
+	make -C frontend start
 
-lint:
-	npx eslint . --ext js,jsx
+start-backend:
+	npx start-server
 
-publish:
-	npm publish
-
-deploy:
-	git push heroku
-
-test:
-	npm test -s
-
-.PHONY: test
+start:
+	make start-backend & make start-frontend
