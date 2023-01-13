@@ -11,7 +11,6 @@ const useFetchChatData = () => {
   const { t } = useTranslation();
   const [isDataFetched, setIsDataFetched] = useState(false);
   const { token, logOut } = useAuth();
-  const headers = { Authorization: `Bearer ${token}` };
 
   const dispatch = useDispatch();
 
@@ -21,6 +20,7 @@ const useFetchChatData = () => {
     }
     const fetchContent = async () => {
       try {
+        const headers = { Authorization: `Bearer ${token}` };
         const { data } = await axios.get(routes.dataPath(), { headers });
         const { messages, channels, currentChannelId } = data;
         dispatch(actions.initChannels({ channels, currentChannelId }));
@@ -37,7 +37,7 @@ const useFetchChatData = () => {
       }
     };
     fetchContent();
-  }, []);
+  }, [dispatch, isDataFetched, logOut, t, token]);
 
   return isDataFetched;
 };
